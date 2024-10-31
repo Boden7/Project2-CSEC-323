@@ -6,7 +6,7 @@
 # Import statements
 from transaction import Transaction
 
-class Name: 
+class Name: # Hunter 
       
     def __init__(self, first_name: str, last_name: str):
       # Assert statements for preconditions
@@ -21,7 +21,7 @@ class Name:
     def __str__(self):
       return f"{self._firstName} {self._lastName}"
       
-class PhoneNumber: 
+class PhoneNumber: # Hunter 
     
     def __init__(self, phoneNum: str):
       assert isinstance(phoneNum, str), "The phone number must be a string composed of integer values."
@@ -33,7 +33,7 @@ class PhoneNumber:
     def __str__(self):
       return f"+1({self._phoneNum[0,1,2]}){self._phoneNum[3,4,5]}-{self._phoneNum[6,7,8,9]}"
       
-class Address:
+class Address: # Hunter 
     
     def __init__(self, street: str, city: str, state: str):
 
@@ -56,7 +56,7 @@ class Address:
     def __str__(self):
       return f"{self._street}, {self._city}, {self._state}"
 
-class Client:
+class Client: # Hunter 
    client_counter = 100 # client number set to monotonically increase
    
    def __init__(self, name: Name, address: Address, phoneNumber: PhoneNumber):
@@ -70,7 +70,7 @@ class Client:
       self._bankAccounts = []
 
    # open a bank account:
-   def open_bank_account(self, account):
+   def open_bank_account(self, account):  
      assert account not in self.bank_accounts, "Account already exists."
      # add the account to the clients list of accounts:
      self._bankAccounts.append(account)
