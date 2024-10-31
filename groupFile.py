@@ -52,7 +52,8 @@ class Client:
       self._city = city 
       self._state = state 
       self.bank_accounts = []
-      
+
+   # display the client information: 
    def display_details(self): 
 
      details = (
