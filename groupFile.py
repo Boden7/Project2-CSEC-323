@@ -6,79 +6,104 @@
 # Import statements
 from transaction import Transaction
 
-class Client:
-   
-   client_counter = 100 # client number set to monotonically increase
-   
-   def __init__(self, firstName, lastName, phoneNum, street, city, state):
+class Name: 
       
-      self.client_number = Client.client_counter
-      Client.client_counter += 1 # monotonically increase client number with each new instance of a client
-
-
+    def __init__(self, first_name: str, last_name: str):
       # Assert statements for preconditions
-      assert firstName, "First name cannot be empty."
-      assert firstName.isalpha(), "The first name must not contain any special characters."
-      assert len(firstName) > 0 and len(firstName) <= 25, "The first name must be a valid length."
+      assert first_name.isalpha(), "The first name must not contain any special characters."
+      assert len(first_name) > 0 and len(first_name) <= 25, "The first name must be a valid length."
+      assert last_name.isalpha(), "The last name must not contain any special characters."
+      assert len(last_name) > 0 and len(last_name) <= 40, "The last name must be a valid length."
       
-      assert lastName, "Last name cannot be empty."
-      assert lastName.isalpha(), "The last name must not contain any special characters."
-      assert len(lastName) > 0 and len(lastName) <= 40, "The last name must be a valid length."
+      self._firstName = first_name 
+      self._lastName = last_name 
+
+    def __str__(self):
+      return f"{self._firstName} {self._lastName}"
       
-      assert phoneNum, "Phone number cannot be empty."
-      assert isinstance(phoneNum, int), "The phone number must be composed of integer values."
+class PhoneNumber: 
+    
+    def __init__(self, phoneNum: str):
+      assert isinstance(phoneNum, str), "The phone number must be a string composed of integer values."
+      assert phoneNum.isdigit(), "The phone number must only contain integer values."
       assert len(phoneNum) == 10, "The phone number must be ten characters in length."
       assert phoneNum[0] != 0, "The phone number cannot start with '0'."
+      self._phoneNum = phoneNum
+
+    def __str__(self):
+      return f"+1({self._phoneNum[0,1,2]}){self._phoneNum[3,4,5]}-{self._phoneNum[6,7,8,9]}"
       
+class Address:
+    
+    def __init__(self, street: str, city: str, state: str):
+
       assert street.isalpha(), "The street must not contain any special characters."
-      assert street != '', "Client must have a designated street address."
       assert len(street) > 0 and len(street) <= 30, "The street must be a valid length."
      
       assert city.isalpha(), "The city must not contain any special characters."
-      assert city, "City must be designated."
       assert len(city) > 0 and len(city) <= 30, "The city must be a valid length."
       
-      assert state, "State cannot be empty."
       assert state.isalpha(), "The state must not contain any special characters."
       assert len(state) == 2, "State abbreviation must be two characters in length."
-      assert state == "VA" or "MD" or "NJ" or "PA" or "DE" or "NC" or "WV" or "DC", "Invalid State designated."
+      assert state == "VA" or state == "MD" or state == "NJ" \
+        or state == "PA" or state == "DE" or state == "NC" \
+            or state == "WV" or state == "DC", "Invalid State designated."
       
-
-      # Sets the instance variables
-      self._firstName = firstName
-      self._lastName = lastName
-      self._phoneNum = phoneNum
       self._street = street
-      self._city = city 
+      self._city = city
       self._state = state 
-      self.bank_accounts = []
 
-   # display the client information: 
-   def display_details(self): 
+    def __str__(self):
+      return f"{self._street}, {self._city}, {self._state}"
 
-     details = (
-     f"Client Number: {self.client_number}\n"
-     f"Name: {self.firstName} {self.lastName}\n"
-     f"Phone Number: {self.phoneNum}\n"
-     f"Address: {self.street['street']}, {self.city['city']}, {self.state['state']}\n"
-     f"Bank Accounts: {self.bank_accounts}\n"
-     )
-     print(details)
+class Client:
+   client_counter = 100 # client number set to monotonically increase
+   
+   def __init__(self, name: Name, address: Address, phoneNumber: PhoneNumber):
+      
+      self._clientNumber = Client.client_counter
+      Client.client_counter += 1 # monotonically increase client number with each new instance of a client
+
+      self._name = name 
+      self._address = address
+      self._phoneNumber = phoneNumber
+      self._bankAccounts = []
 
    # open a bank account:
    def open_bank_account(self, account):
      assert account not in self.bank_accounts, "Account already exists."
      # add the account to the clients list of accounts:
-     self.bank_accounts.append(account)
+     self._bankAccounts.append(account)
 
    # close a bank account:
    def close_bank_account(self, account):
-     assert account in self.bank_accounts, "Account not found."
+     assert account in self._bankAccounts, "Account not found."
      # withdraw all funds and remove the account: 
      print(f"Withdrawing all funds from account: {account}.")
-     self.bank_accounts.remove(account)
+     self._bankAccounts.remove(account)
 
+   def getClientAccounts(self):
+      # returns a list of the clients bank accounts:
+      return self._bankAccounts
+   
+   def getClientNumber(self):
+      # returns the clients account number:
+      return self._clientNumber
+   
+   def getNextClientNumber(self):
+      # returns the next available client number:
+      return Client.client_counter
+   
+   def display_details(self): 
 
+     details = (
+     f"Client Number: {self._clientNumber}\n"
+     f"Name: {self._name}\n"
+     f"Phone Number: {self._phoneNumber}\n"
+     f"Address: {self._address}\n"
+     f"Bank Accounts: {self._bankAccounts}\n"
+     )
+     print(details)
 
 class BankAccount:
    # A private class variable that holds the number of the next account value
