@@ -289,16 +289,6 @@ class BankAccount:
     def getAccountNumber(self):
         return self._accountNum
 
-    # Returns a String representation of a Bank Account object
-    #
-    # @return: A String representation of the Bank Account object (String)
-    # Anna - edited by Hunter for P2
-    def __repr__(self):
-      # Creating the list of valid transactions to print to the screen
-      transactionVals = self.transactionList()
-      
-      return ("%s Account #%d owned by %s %s has a balance of %.2f. The valid transactions include:\n%s" % \
-         (self._accountType.capitalize(), self._accountNum, self._firstName, self._lastName, self._balance, transactionVals))
    
     # Returns a String representation of the transactions for a Bank Account object
     #
@@ -352,6 +342,18 @@ class BankAccount:
       # decoded_bytes = 
         return decoded_bytes.decode('utf-8')
 
+
+    # Returns a String representation of a Bank Account object
+    #
+    # @return: A String representation of the Bank Account object (String)
+    # Anna - edited by Hunter for P2
+    def __repr__(self):
+      # Creating the list of valid transactions to print to the screen
+      transactionVals = self.transactionList()
+      
+      return ("%s Account #%d owned by %s %s has a balance of %.2f. The valid transactions include:\n%s" % \
+         (self._accountType.capitalize(), self._accountNum, self._firstName, self._lastName, self._balance, transactionVals))
+
 # Class representing a checking account 
 # Inherited from the BankAccount superclass
 # Hunter 
@@ -403,7 +405,7 @@ class CheckingAccount(BankAccount):
 # Hunter 
 class SavingsAccount(BankAccount): 
     def __init__(self, balanceIn = 0.0):
-        super().__init__(balanceIn, account_type='savings')
+        super().__init__(balanceIn, account_type = 'savings')
 
     # An accessor/getter method for the overdraft fee
     #
