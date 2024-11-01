@@ -80,7 +80,7 @@ class PhoneNumber:
       assert len(number) == 10, "The phone number must be ten characters in length."
       assert number[0] != '0', "The phone number cannot start with '0'."
       
-      self._phoneNum = number # ensures most current value is set
+      self._phoneNum = number # ensures most current value is set (updates phone number)
 
 
     def __str__(self):
