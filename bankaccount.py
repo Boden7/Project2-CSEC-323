@@ -384,8 +384,11 @@ class CheckingAccount(BankAccount): # Hunter
         super()._read_transactions("checking.txt")
 
 
-class SavingsAccount(BankAccount): # Hunter 
-    def __init__(self, balanceIn=0.0):
+# class to represent a savings account
+# inheriting from BankAccount superclass
+# Hunter 
+class SavingsAccount(BankAccount): 
+    def __init__(self, balanceIn = 0.0):
         super().__init__(balanceIn, account_type='savings')
 
     # An accessor/getter method for the overdraft fee
@@ -403,6 +406,7 @@ class SavingsAccount(BankAccount): # Hunter
     def getOverdrawnCount(self):
       return self._overdrawnCount
 
+    # method to withdraw an amount from savings account
     # Hunter 
     def withdraw(self, amount):
         assert isinstance(amount, float), "Amount must be valid."
@@ -413,7 +417,7 @@ class SavingsAccount(BankAccount): # Hunter
         if self._overdrawnCount < 3:
             if self._balance >= amount:
                 valid = super().withdraw(amount)
-                # if the account balance eexceeds 10000 reset overdrawn counter:
+                # if the account balance exceeds 10000 reset overdrawn counter:
                 if valid and self._balance >= 10000:
                     self._overdrawnCount = 0
                 return valid
@@ -421,30 +425,35 @@ class SavingsAccount(BankAccount): # Hunter
                 self._overdrawnCount += 1
                 # overdrawn count check to apply the appropriate fee to the account
                 fee = BankAccount._overdraftFee[self._overdrawnCount - 1]
-                self._balance -= fee  # Apply overdraft fee to account
-                # information about the overdraft and fee applied 
+                self._balance -= fee  # Apply overdraft fee to account and update balance
+                # information about the overdraft and fee applied
                 print(f"Withdrawal denied: insufficient funds. Overdrawn count: {self._overdrawnCount}. Fee applied: {fee:.2f}")
         else:
             print("Withdrawal denied: overdraft limit exceeded.")
         return False
 
+    # Prints all transactions for the savings account
     # Hunter 
     def print_transactions(self):
         print("Savings Account Transactions:")
         print(self.transactionList())
 
+    # Method to write all transactions made on a savings account to the savings.txt
+    # file, data is encrypted first
     # Hunter 
     def write_transactions(self):
-        self._write_transactions("savings.txt")
+        super()._write_transactions("savings.txt")
 
+    # Method to read transactions from the savings.txt file
+    # data is decrypted first
     # Hunter 
     def read_transactions(self):
-        self._read_transactions("savings.txt")
+        super()._read_transactions("savings.txt")
 
+    # method to calculate and apply the interest for savings account:
     # Hunter 
     def calc_interest(self):
         if self._balance > 0:
-            # deposit the interest to the balance of the savings account
             interest_amount = self._balance * BankAccount._intRates['savings']
             self.deposit(interest_amount)
             return True
