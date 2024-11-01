@@ -56,7 +56,9 @@ class Name:
       assert len(first) > 0 and len(first) <= 25, "The first name must be a valid length."      
       
       self._firstName = first
-      
+
+# Class containing the phone numbers of clients 
+# Hunter 
 class PhoneNumber: 
     
     def __init__(self, phoneNum: str):
@@ -68,10 +70,12 @@ class PhoneNumber:
       self._phoneNum = phoneNum
 
    # Accessor/getter method for the phone number
+   # Hunter 
    def getPhoneNumber(self):
       return self._phoneNum
 
    # Mutator/setter method for the phone number
+   # Hunter 
    def setPhoneNumber(self, number: str):
       # Sets a new phone number after validating it:
       # Ensures new phone number is valid
@@ -82,10 +86,12 @@ class PhoneNumber:
       
       self._phoneNum = number # ensures most current value is set (updates phone number)
 
-
+    # string representation of the clients phone number 
     def __str__(self):
       return f"+1({self._phoneNum[0,1,2]}){self._phoneNum[3,4,5]}-{self._phoneNum[6,7,8,9]}"
-      
+
+# Class containing address information for clients 
+# Hunter 
 class Address:
     
     def __init__(self, street: str, city: str, state: str):
