@@ -357,9 +357,8 @@ class BankAccount:
       # Creating the list of valid transactions to print to the screen
       transactionVals = self.transactionList()
       
-      return ("%s Account #%d owned by %s %s has a balance of %.2f. The valid transactions include:\n%s" % \
-         (self._accountType.capitalize(), self._accountNum, self._firstName, self._lastName, self._balance, transactionVals))
-
+       return (f"{self._accountType.capitalize()} Account #{self._accountNum} \
+             has a balance of {self._balance:.2f}. Transactions:{transactionVals}")
 # Class representing a checking account 
 # Inherited from the BankAccount superclass
 # Hunter 
