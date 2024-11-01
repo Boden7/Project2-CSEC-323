@@ -5,7 +5,8 @@
 from transaction import Transaction
 from datetime import datetime
 
-
+# Class to store the names of clients:
+# Hunter 
 class Name: 
       
     def __init__(self, first_name: str, last_name: str):
