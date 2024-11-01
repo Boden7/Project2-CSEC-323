@@ -63,7 +63,7 @@ class PhoneNumber:
       assert isinstance(phoneNum, str), "The phone number must be a string composed of integer values."
       assert phoneNum.isdigit(), "The phone number must only contain integer values."
       assert len(phoneNum) == 10, "The phone number must be ten characters in length."
-      assert phoneNum[0] != 0, "The phone number cannot start with '0'."
+      assert phoneNum[0] != '0', "The phone number cannot start with '0'."
       
       self._phoneNum = phoneNum
 
