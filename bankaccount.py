@@ -385,7 +385,7 @@ class CheckingAccount(BankAccount):
         print("Checking Account Transactions:")
         super().transactionList()
 
-    # Method to write all transactions made on a savings account to the checking.txt
+    # Method to write all transactions made on a checking account to the checking.txt
     # file, data is encrypted first
     # Hunter
     def write_transactions(self):
