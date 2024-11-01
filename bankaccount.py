@@ -3,7 +3,6 @@
 
 # Import statements
 from transaction import Transaction
-from datetime import datetime
 
 # Class to store the names of clients:
 # Hunter 
