@@ -64,7 +64,24 @@ class PhoneNumber:
       assert phoneNum.isdigit(), "The phone number must only contain integer values."
       assert len(phoneNum) == 10, "The phone number must be ten characters in length."
       assert phoneNum[0] != 0, "The phone number cannot start with '0'."
+      
       self._phoneNum = phoneNum
+
+   # Accessor/getter method for the phone number
+   def getPhoneNumber(self):
+      return self._phoneNum
+
+   # Mutator/setter method for the phone number
+   def setPhoneNumber(self, number: str):
+      # Sets a new phone number after validating it:
+      # Ensures new phone number is valid
+      assert isinstance(number, str), "The phone number must be a string composed of integer values."
+      assert number.isdigit(), "The phone number must only contain integer values."
+      assert len(number) == 10, "The phone number must be ten characters in length."
+      assert number[0] != '0', "The phone number cannot start with '0'."
+      
+      self._phoneNum = number # ensures most current value is set
+
 
     def __str__(self):
       return f"+1({self._phoneNum[0,1,2]}){self._phoneNum[3,4,5]}-{self._phoneNum[6,7,8,9]}"
