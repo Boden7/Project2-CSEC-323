@@ -27,6 +27,6 @@ class PhoneNumber:
       
         self._phoneNum = number # ensures most current value is set (updates phone number)
 
-    # string representation of the clients phone number 
-    def __str__(self):
-        return f"+1({self._phoneNum[0,1,2]}){self._phoneNum[3,4,5]}-{self._phoneNum[6,7,8,9]}"
+    # repr method for string representation of the clients phone number 
+    def __repr__(self):
+        return f"+1({self._phoneNum[0:2]}){self._phoneNum[3:5]}-{self._phoneNum[6:9]}"
