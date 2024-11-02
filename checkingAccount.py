@@ -8,6 +8,8 @@ class CheckingAccount(BankAccount):
         super().__init__(balanceIn, account_type = 'checking')
 
     # Method to withdraw an amount from a checking account 
+    # @require: amount is a floating-point value > 0.
+    # @ensure: withdraw amount from account
     # Hunter 
     def withdraw(self, amount):
         if isinstance(amount, float) and amount > 0:
