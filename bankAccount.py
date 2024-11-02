@@ -129,7 +129,7 @@ class BankAccount:
 
     def _write_transactions(self, filename):
         with open(filename, 'w') as file:
-           # encrypted_data = 
+            # encrypted_data = 
             file.write(encrypted_data)
 
     def _read_transactions(self, filename):
