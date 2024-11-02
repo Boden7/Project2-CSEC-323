@@ -1,9 +1,9 @@
 # @author Boden Kahn, Anna Pitt
 # Date: 10/11/24
 import unittest
-from groupFile import BankAccount
+from bankAccount import BankAccount
 
-class TestP1(unittest.TestCase):
+class BankAccountTester(unittest.TestCase):
     # Anna
     def setUp(self):
         #Resets the bank account number for each test
