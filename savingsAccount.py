@@ -22,6 +22,9 @@ class SavingsAccount(BankAccount):
       return self._overdrawnCount
 
     # method to withdraw an amount from savings account
+    # @require: amount is a floating-point value > 0
+    # @param: withdraw amount
+    # @ensure: amount withdrawed is removed from balance 
     # Hunter 
     def withdraw(self, amount):
         assert isinstance(amount, float), "Amount must be valid."
@@ -53,7 +56,7 @@ class SavingsAccount(BankAccount):
         print("Savings Account Transactions:")
         print(self.transactionList())
 
-    # Method to write all transactions made on a checking account to the checking.txt
+    # Method to write all transactions made on a checking account to the savings.txt
     # file, data is encrypted first
     # Hunter
     def _write_transactions(self):
@@ -61,7 +64,7 @@ class SavingsAccount(BankAccount):
             # encrypted_data = 
             file.write(encrypted_data)
 
-    # Method to read all transactions made on a checking account to the checking.txt
+    # Method to read all transactions made on a checking account to the savings.txt
     # file, data is decrypted first
     # Hunter
     def _read_transactions(self):
