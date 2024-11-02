@@ -140,14 +140,6 @@ class BankAccount:
             for transaction in transactions:
                 print(transaction)
 
-    def _encrypt_data(self, data):
-      # encoded_bytes = 
-        return encoded_bytes.decode('utf-8')
-
-    def _decrypt_data(self, data):
-      # decoded_bytes = 
-        return decoded_bytes.decode('utf-8')
-
 
     # Returns a String representation of a Bank Account object
     #
