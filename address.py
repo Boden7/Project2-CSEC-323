@@ -55,7 +55,7 @@ class Address:
         assert state in ["VA", "MD", "NJ", "PA", "DE", "NC", "WV", "DC"], "Invalid state designated."
         self._state = state
 
-    # repr for full address:
+    # repr method for string representation of the full address:
     # Hunter 
-    def __str__(self):
+    def __repr__(self):
       return f"{self._street}, {self._city}, {self._state}"
