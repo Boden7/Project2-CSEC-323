@@ -32,14 +32,24 @@ class CheckingAccount(BankAccount):
         print("Checking Account Transactions:")
         super().transactionList()
 
+
     # Method to write all transactions made on a checking account to the checking.txt
     # file, data is encrypted first
     # Hunter
-    def write_transactions(self):
-        super()._write_transactions("checking.txt")
+    def _write_transactions(self):
+        with open('checking.txt', 'w') as file:
+            # encrypted_data = 
+            file.write(encrypted_data)
 
     # Method to read all transactions made on a checking account to the checking.txt
     # file, data is decrypted first
     # Hunter
-    def read_transactions(self):
-        super()._read_transactions("checking.txt")
+    def _read_transactions(self):
+        with open('checking.txt', 'r') as file:
+            encrypted_data = file.read()
+          # decrypted_data = 
+          # transactions = 
+            for transaction in transactions:
+                print(transaction)
+                
+   
