@@ -58,7 +58,7 @@ class BankAccount:
     #
     # @return: A String representation of the transactions stored within a Bank Account object (String)
     # Anna
-    def transactionList(self):
+    def printTransactionList(self):
       # If the transaction list is empty
       if(len(self._accountTransactions) == 0):
          return("There are no valid transactions to display.")
