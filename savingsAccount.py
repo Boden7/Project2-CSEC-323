@@ -53,17 +53,24 @@ class SavingsAccount(BankAccount):
         print("Savings Account Transactions:")
         print(self.transactionList())
 
-    # Method to write all transactions made on a savings account to the savings.txt
+    # Method to write all transactions made on a checking account to the checking.txt
     # file, data is encrypted first
-    # Hunter 
-    def write_transactions(self):
-        super()._write_transactions("savings.txt")
+    # Hunter
+    def _write_transactions(self):
+        with open('savings.txt', 'w') as file:
+            # encrypted_data = 
+            file.write(encrypted_data)
 
-    # Method to read transactions from the savings.txt file
-    # data is decrypted first
-    # Hunter 
-    def read_transactions(self):
-        super()._read_transactions("savings.txt")
+    # Method to read all transactions made on a checking account to the checking.txt
+    # file, data is decrypted first
+    # Hunter
+    def _read_transactions(self):
+        with open('savings.txt', 'r') as file:
+            encrypted_data = file.read()
+          # decrypted_data = 
+          # transactions = 
+            for transaction in transactions:
+                print(transaction)
 
     # method to calculate and apply the interest for savings account:
     # Hunter 
