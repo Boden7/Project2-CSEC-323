@@ -22,7 +22,6 @@ class BankAccount:
         assert isinstance(balanceIn, float), "The balance must be a floating-point value."
         assert balanceIn >= 0.0, "The balance must be a positive value." 
         assert account_type in ['checking', 'savings'], "Invalid account type."
-    
 
         # Sets the instance variables
         self._accountNum = BankAccount._nextAccountVal
@@ -32,58 +31,18 @@ class BankAccount:
         self._balance = balanceIn
         self._overdrawnCount = 0  # Counter for overdrafts (savings only)
         self._accountType = account_type
-        
 
-
-    # Deposits money into the account if the transaction is valid and records the transaction
-    # Boden
-    #@param amount: the amount to be deposited
-    #@require amount > 0
-    #@return The success or failure of the deposit
+    @abstractmethod
     def deposit(self, amount):
-        # Make sure the amount to deposit is an int and not negative
-        assert(isinstance(amount, float))
-        assert(amount > 0)
-        # Process the transaction and update necessary variables
-        depositTransaction = Transaction("deposit", amount)
-        # Add deposit to list of transactions
-        self._accountTransactions.append(depositTransaction)
-        self._balance += amount
-        return True
+        pass
     
-    # Boden
-    #@param amount: the amount to be withdrawn
-    #@require amount > 0
-    #@return The valid or failure of the withdrawal
+    @abstractmethod
     def withdraw(self, amount):
-        # Make sure the amount to deposit is an int and not negative
-        assert(isinstance(amount, float))
-        assert(amount > 0)
-        # if there are enough funds to withdraw from the account: 
-        if self._balance >= amount:
-            transaction = Transaction("withdrawal", amount)
-            self._accountTransactions.append(transaction)
-            # deduct amount from the balance of the account
-            self._balance -= amount 
-            return True
-        print("Withdrawal denied: insufficient funds.")
-        return False
- 
+        pass
      
-    # Transfer an amount of money from one account to another
-    # cannot transfer funds between the same account.
-    # @param amount: The amount being transferred to the other account
-    # @param otherAccount: The account that is being transferred the money (if possible)
-    # @return: True if the money was able to be transferred and False if not
-    # Brenden - updated by Hunter for P2:
+    @abstractmethod
     def transfer(self, amount, otherAccount):
-        if isinstance(otherAccount, BankAccount) and otherAccount != self:
-            if self.withdraw(amount):
-                otherAccount.deposit(amount)
-                transaction = Transaction("transfer", amount)
-                self._accountTransactions.append(transaction)
-                return True
-        return False
+        pass
 
     # Accessor/getter to retrieve the balance of an account: 
     # Anna 
@@ -95,7 +54,6 @@ class BankAccount:
     def getAccountNumber(self):
         return self._accountNum
 
-   
     # Returns a String representation of the transactions for a Bank Account object
     #
     # @return: A String representation of the transactions stored within a Bank Account object (String)
@@ -126,32 +84,14 @@ class BankAccount:
       # Returns the full amount of transactions as a String
       return(transList)
    
+    @abstractmethod
+    def _writeTransaction(self):
+        pass
 
-    def _write_transactions(self, filename):
-        with open(filename, 'w') as file:
-            # encrypted_data = 
-            file.write(encrypted_data)
+    @abstractmethod
+    def _readTransactions(self):
+        pass
 
-    def _read_transactions(self, filename):
-        with open(filename, 'r') as file:
-            encrypted_data = file.read()
-          # decrypted_data = 
-          # transactions = 
-            for transaction in transactions:
-                print(transaction)
-
-
-    # Returns a String representation of a Bank Account object
-    #
-    # @return: A String representation of the Bank Account object (String)
-    # Anna - edited by Hunter for P2
+    @abstractmethod
     def __repr__(self):
-        # Creating the list of valid transactions to print to the screen
-        transactionVals = self.transactionList()
-      
-        return (f"{self._accountType.capitalize()} Account #{self._accountNum} \
-            has a balance of {self._balance:.2f}. Transactions:{transactionVals}")
-
-
-
-
+        pass
