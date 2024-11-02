@@ -54,7 +54,7 @@ class SavingsAccount(BankAccount):
     # Hunter 
     def printTransactionList(self):
         print("Savings Account Transactions:")
-        print(self.transactionList())
+        super().transactionList()
 
     # Method to write all transactions made on a checking account to the savings.txt
     # file, data is encrypted first
