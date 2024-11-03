@@ -41,7 +41,7 @@ class CheckingAccount(BankAccount):
             withdrawalTransaction = Transaction("withdrawal", amount)
             # add withdrawal to list of transactions
             self._accountTransactions.append(withdrawalTransaction)
-            self.writeTransaction(withdrawalTransaction)
+            self._writeTransaction(withdrawalTransaction)
             self._balance -= amount
             return True
         else:
@@ -56,7 +56,7 @@ class CheckingAccount(BankAccount):
         transaction = Transaction("interest", interest_amount)
         # add interest to list of transactions
         self._accountTransactions.append(transaction)
-        self.writeTransaction(transaction)
+        self._writeTransaction(transaction)
         self.deposit(interest_amount)
         return True
     
