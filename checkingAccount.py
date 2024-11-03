@@ -48,6 +48,21 @@ class CheckingAccount(BankAccount):
             print("Withdrawal denied: insufficient funds.")
             return False
 
+    # Transfer an amount of money from one account to another
+    # @param amount: The amount being transferred to the other account
+    # @param otherAccount: The account that is being transferred the money (if possible)
+    # @return: True if the money was able to be transferred and False if not
+    # Boden
+    def transfer(self, amount, otherAccount):
+        if self.withdraw(amount):
+            otherAccount.deposit(amount)
+            transaction = Transaction("transfer", amount)
+            # add transfer to list of transactions
+            self._accountTransactions.append(transaction)
+            self._writeTransaction(transaction)
+            return True
+        return False
+
     # Method to calculate and apply the interest for checking account:
     # Hunter
     def calcInterest(self):
