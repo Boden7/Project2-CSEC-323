@@ -3,6 +3,7 @@
 
 # Import statements
 from transaction import Transaction
+from abc import ABC, abstractmethod
 
 class BankAccount:
     # A private class variable that holds the number of the next account value
@@ -12,12 +13,10 @@ class BankAccount:
     _overdraftFee = [20.00, 30.00, 50.00]
     
     # A private class variable that holds the interest rates in decimal form 
-    # (checking cannot be overdrafted)
     _intRates = {'checking': 0.015, 'savings': 0.04}
 
     # Hunter 
     def __init__(self, balanceIn = 0.0, account_type = 'checking'):
-        # Assert statements for preconditions
         # Assert statements for preconditions
         assert isinstance(balanceIn, float), "The balance must be a floating-point value."
         assert balanceIn >= 0.0, "The balance must be a positive value." 
