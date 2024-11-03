@@ -47,7 +47,7 @@ class SavingsAccount(BankAccount):
         depositTransaction = Transaction("deposit", amount)
         # add deposit to list of transactions
         self._accountTransactions.append(depositTransaction)
-        self.writeTransaction(depositTransaction)
+        self._writeTransaction(depositTransaction)
         self._balance += amount
         if self.getBalance() >= 100.0:
             self._overdrawnCount = self._overdrawnCount - 1
@@ -94,7 +94,7 @@ class SavingsAccount(BankAccount):
     # Hunter 
     def printTransactionList(self):
         print("Savings Account Transactions:")
-        print(super.printTransactionList())
+        print(super().printTransactionList())
 
     # Method to write all transactions made on a savings account to the savings.txt
     # file, data is encrypted first
