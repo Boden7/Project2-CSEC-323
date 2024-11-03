@@ -12,27 +12,26 @@ class CheckingAccount(BankAccount):
     # @ensure: withdraw amount from account
     # Hunter 
     def withdraw(self, amount):
-        if isinstance(amount, float) and amount > 0:
-            if self._balance >= amount:
-                return super().withdraw(amount)
-            else:
-                print("Withdrawal denied: insufficient funds.")
-        return False
+        assert(isinstance(amount, float))
+        assert(amount > 0)
+        if self._balance >= amount:
+            return super().withdraw(amount)
+        else:
+            print("Withdrawal denied: insufficient funds.")
 
     # Method to calculate and apply the interest for checking account:
     # Hunter
-    def calc_interest(self):
-        if self._balance > 0:
-            interest_amount = self._balance * BankAccount._intRates['checking']
-            self.deposit(interest_amount)
-            return True
-        return False
+    def calcInterest(self):
+        assert(self._balance > 0)
+        interest_amount = self._balance * BankAccount._intRates['checking']
+        self.deposit(interest_amount)
+        return True
     
     # Prints all transactions of a checking account
     # Hunter 
     def printTransactionList(self):
         print("Checking Account Transactions:")
-        super().transactionList()
+        print(super().transactionList())
 
 
     # Method to write all transactions made on a checking account to the checking.txt
