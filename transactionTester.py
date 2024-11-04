@@ -17,6 +17,10 @@ from transaction import Transaction
 
 class TestTransaction(unittest.TestCase):
     
+    # Determines the current day to compare transactions to
+    now = datetime.now()
+    currentDate = now.strftime("%Y-%m-%d")
+    
     DEPOSIT = 2000.00   # Expected Deposit amount
     WITHDRAWL = 500.00  # Expected Withdrawal amount
     FIRST = 100      # Expected first transaction number
@@ -178,7 +182,7 @@ class TestTransaction(unittest.TestCase):
         print("\nTesting the getDate method")
         
         # Determines if the date is what is expected
-        self.assertEqual(self.transaction1.getDate(), "2024-10-11")
+        self.assertEqual(self.transaction1.getDate(), TestTransaction.currentDate)
     
     # Anna
     def test_getTNumber(self):
@@ -230,14 +234,14 @@ class TestTransaction(unittest.TestCase):
         
         # Calls the printTransaction method()
         self.transaction1.printTransaction()
-        mock_print.assert_called_with("Transaction # 100, amount $2000.00, date 2024-10-11 type: deposit")        
+        mock_print.assert_called_with("Transaction # 100, amount $2000.00, date %s type: deposit" % TestTransaction.currentDate)
     
     # Anna
     def test_strCast(self):
         print("\nTesting the __str__ method")
         
         # Determines what the transaction string should equal
-        strCheck = "Transaction # 100, amount = $2000.00, date 2024-10-11, type: deposit"
+        strCheck = "Transaction # 100, amount = $2000.00, date %s, type: deposit" % TestTransaction.currentDate
         
         # Checks to ensure that casting the transaction to a String type produces the correct results
         self.assertEqual(str(self.transaction1), strCheck)
@@ -247,7 +251,7 @@ class TestTransaction(unittest.TestCase):
         print("\nTesting the __repr__ method")
         
         # Determines what the transaction string should equal
-        strCheck = "Transaction(tNumber = 100, amount = $2000.00, date = 2024-10-11, tType = deposit)"
+        strCheck = "Transaction(tNumber = 100, amount = $2000.00, date = %s, tType = deposit)" % TestTransaction.currentDate
         
         # Checks to ensure that casting the transaction to a String type produces the correct results
         self.assertEqual(repr(self.transaction1), strCheck)     
