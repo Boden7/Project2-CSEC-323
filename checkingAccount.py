@@ -139,9 +139,9 @@ class CheckingAccount(BankAccount):
 
     # repr method to print the information of a clients checking account: 
     def __repr__(self):
-        return (f"CheckingAccount(Account Number: {super().getAccountNumber} \n"
-                f"Balance = {self._balance:.2f}\n "
-                f"Account Type='{super()._accountType}')\n"
+        return (f"Account Number: {super().getAccountNumber} \n"
+                f"Balance: {self._balance:.2f}\n "
+                f"Account Type: '{super()._accountType}')\n"
                 f"Transactions:\n{super().printTransactionList}")
 
 
