@@ -1,5 +1,5 @@
 """ 
-This module defines the a tester for the PhoneNumber class.
+This module defines the tester for the PhoneNumber class.
 @author: Anna Pitt
 @date: November 3, 2024
 
@@ -23,7 +23,7 @@ class TestPhoneNumber(unittest.TestCase):
         # Initializes incorrect phone numbers
         self.invalidLength = "804000000"
         self.invalidChars = "804-000-0000"
-        self.invalidInstance = 8040000000
+        self.invalidType = 8040000000
         self.invalidIndex = "0000000000"
         self.invalidEmpty = ""
         
@@ -55,12 +55,12 @@ class TestPhoneNumber(unittest.TestCase):
         self.assertRaises(AssertionError, PhoneNumber, self.invalidChars) 
     
     # Anna
-    def test_ConstructorInvalidInstance(self):
+    def test_ConstructorInvalidType(self):
         print("\nTesting the constructor with an invalid phone number type")
         
         # Ensures the PhoneNumber object with false call to phone number parameter
         # throws an assertion error
-        self.assertRaises(AssertionError, PhoneNumber, self.invalidInstance)
+        self.assertRaises(AssertionError, PhoneNumber, self.invalidType)
     
     # Anna
     def test_ConstructorInvalidFirstIndex(self):
@@ -95,12 +95,12 @@ class TestPhoneNumber(unittest.TestCase):
         self.assertRaises(AssertionError, self.validNum.setPhoneNumber, self.invalidChars) 
     
     # Anna
-    def test_setPhoneNumberInvalidInstance(self):
+    def test_setPhoneNumberInvalidType(self):
         print("\nTesting setPhoneNumber() with an invalid phone number type")
         
         # Ensures the call to setPhoneNumber() with false call to phone number parameter
         # throws an assertion error
-        self.assertRaises(AssertionError, self.validNum.setPhoneNumber, self.invalidInstance)
+        self.assertRaises(AssertionError, self.validNum.setPhoneNumber, self.invalidType)
     
     # Anna
     def test_setPhoneNumberInvalidFirstIndex(self):
