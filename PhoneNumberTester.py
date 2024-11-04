@@ -30,6 +30,7 @@ class TestPhoneNumber(unittest.TestCase):
         # Initializes a valid phone number to attempt to change
         self.validNum = PhoneNumber("8040000000")
     
+    # Anna
     def test_ConstructorInvalidLength(self):
         print("\nTesting the constructor with an invalid phone number length of 9")
         
@@ -37,6 +38,7 @@ class TestPhoneNumber(unittest.TestCase):
         # throws an assertion error
         self.assertRaises(AssertionError, PhoneNumber, self.invalidLength)
     
+    # Anna
     def test_ConstructorInvalidLengthEmpty(self):
         print("\nTesting the constructor with an invalid phone number length of 0 (empty string)")
         
@@ -44,6 +46,7 @@ class TestPhoneNumber(unittest.TestCase):
         # throws an assertion error
         self.assertRaises(AssertionError, PhoneNumber, self.invalidEmpty)
     
+    # Anna
     def test_ConstructorInvalidCharacters(self):
         print("\nTesting the constructor with an invalid phone number with non-digit characters")
         
@@ -51,6 +54,7 @@ class TestPhoneNumber(unittest.TestCase):
         # throws an assertion error
         self.assertRaises(AssertionError, PhoneNumber, self.invalidChars) 
     
+    # Anna
     def test_ConstructorInvalidInstance(self):
         print("\nTesting the constructor with an invalid phone number type")
         
@@ -58,6 +62,7 @@ class TestPhoneNumber(unittest.TestCase):
         # throws an assertion error
         self.assertRaises(AssertionError, PhoneNumber, self.invalidInstance)
     
+    # Anna
     def test_ConstructorInvalidFirstIndex(self):
         print("\nTesting the constructor with an invalid first index of the phone number")
         
@@ -65,6 +70,7 @@ class TestPhoneNumber(unittest.TestCase):
         # throws an assertion error
         self.assertRaises(AssertionError, PhoneNumber, self.invalidIndex)
     
+    # Anna
     def test_setPhoneNumberInvalidLength(self):
         print("\nTesting setPhoneNumber() with an invalid phone number length of 9")
         
@@ -72,6 +78,7 @@ class TestPhoneNumber(unittest.TestCase):
         # throws an assertion error
         self.assertRaises(AssertionError, self.validNum.setPhoneNumber, self.invalidLength)
     
+    # Anna
     def test_setPhoneNumberInvalidLengthEmpty(self):
         print("\nTesting setPhoneNumber() with an invalid phone number length of 0 (empty string)")
         
@@ -79,6 +86,7 @@ class TestPhoneNumber(unittest.TestCase):
         # throws an assertion error
         self.assertRaises(AssertionError, self.validNum.setPhoneNumber, self.invalidEmpty)
     
+    # Anna
     def test_setPhoneNumberInvalidCharacters(self):
         print("\nTesting setPhoneNumber() with an invalid phone number with non-digit characters")
         
@@ -86,6 +94,7 @@ class TestPhoneNumber(unittest.TestCase):
         # throws an assertion error
         self.assertRaises(AssertionError, self.validNum.setPhoneNumber, self.invalidChars) 
     
+    # Anna
     def test_setPhoneNumberInvalidInstance(self):
         print("\nTesting setPhoneNumber() with an invalid phone number type")
         
@@ -93,6 +102,7 @@ class TestPhoneNumber(unittest.TestCase):
         # throws an assertion error
         self.assertRaises(AssertionError, self.validNum.setPhoneNumber, self.invalidInstance)
     
+    # Anna
     def test_setPhoneNumberInvalidFirstIndex(self):
         print("\nTesting setPhoneNumber() with an invalid first index of the phone number")
         
