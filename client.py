@@ -56,3 +56,14 @@ class Client: # Hunter
      f"Bank Accounts: {self._bankAccounts}\n"
      )
      print(details)
+
+   # check to see if client numbers are equal
+   # Brenden
+   def __eq__(self, other):
+        # Check if other is an instance of Client
+        if isinstance(other, Client):
+            # Compare variables
+            return (self._name == other._name and
+                    self._address == other._address and
+                    self._phoneNumber == other._phoneNumber)
+        return False
