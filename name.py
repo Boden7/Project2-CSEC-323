@@ -3,14 +3,16 @@
 class Name: 
       
     def __init__(self, first_name: str, last_name: str):
-      # Assert statements for preconditions
-      assert first_name.isalpha(), "The first name must not contain any special characters."
-      assert len(first_name) > 0 and len(first_name) <= 25, "The first name must be a valid length."
-      assert last_name.isalpha(), "The last name must not contain any special characters."
-      assert len(last_name) > 0 and len(last_name) <= 40, "The last name must be a valid length."
-      
-      self._firstName = first_name 
-      self._lastName = last_name 
+        # Assert statements for preconditions
+        assert isinstance(first_name, str)
+        assert first_name.isalpha(), "The first name must not contain any special characters."
+        assert len(first_name) > 0 and len(first_name) <= 25, "The first name must be a valid length."
+        assert isinstance(last_name, str)
+        assert last_name.isalpha(), "The last name must not contain any special characters."
+        assert len(last_name) > 0 and len(last_name) <= 40, "The last name must be a valid length."
+        
+        self._firstName = first_name 
+        self._lastName = last_name 
     
     # An accessor/getter method for the first name
     #
