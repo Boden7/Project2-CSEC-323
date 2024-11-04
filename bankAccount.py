@@ -53,6 +53,8 @@ class BankAccount:
     def getAccountNumber(self):
         return self._accountNum
 
+    # Accessor/getter to retrieve the next account number:
+    # Hunter 
     def getNextAccountNumber(self):
       # returns the next available account number:
       return BankAccount._nextAccountVal
