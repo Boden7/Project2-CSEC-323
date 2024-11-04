@@ -135,3 +135,13 @@ class CheckingAccount(BankAccount):
                 print("Decrypted transaction:", data.decode())
                 infile.readline()  # Skip the newline
                 length = infile.readline().rstrip().decode()
+
+
+    # repr method to print the information of a clients checking account: 
+    def __repr__(self):
+        return (f"CheckingAccount(account_number={super().getAccountNumber}, "
+                f"Balance = {self._balance:.2f}, "
+                f"Account Type='{super()._accountType}')\n"
+                f"Transactions:\n{super().printTransactionList}")
+
+
