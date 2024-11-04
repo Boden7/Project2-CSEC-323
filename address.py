@@ -1,10 +1,13 @@
 # Class containing address information for clients 
 # Hunter 
+
+import re
+
 class Address:
     
     def __init__(self, street: str, city: str, state: str):
 
-      assert street.isalpha(), "The street must not contain any special characters."
+      assert re.match(r"^[a-zA-Z0-9\s]+$", street), "Invalid street name"
       assert len(street) > 0 and len(street) <= 30, "The street must be a valid length."
      
       assert city.isalpha(), "The city must not contain any special characters."
