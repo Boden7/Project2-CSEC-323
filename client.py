@@ -29,7 +29,9 @@ class Client: # Hunter
      # withdraw all funds and remove the account: 
      print(f"Withdrawing all funds from account: {account}.")
      print(f"Account {account} closed.")
+     # remove the account from the list and dereference it
      self._bankAccounts.remove(account)
+     account = None
 
    def getClientAccounts(self):
       # returns a list of the clients bank accounts:
@@ -54,4 +56,3 @@ class Client: # Hunter
      f"Bank Accounts: {self._bankAccounts}\n"
      )
      print(details)
-    
