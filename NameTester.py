@@ -1,5 +1,5 @@
 """ 
-This module defines the a tester for the Name class.
+This module defines the tester for the Name class.
 @author: Anna Pitt
 @date: November 3, 2024
 
