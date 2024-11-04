@@ -9,7 +9,7 @@ Test each method with at least one unit test
 
 import unittest
 from unittest.mock import patch
-from address import Address
+from Address import Address
 
 class TestAddress(unittest.TestCase):
     # Tests not done in this tester that have been tested elsewhere:
@@ -30,7 +30,8 @@ class TestAddress(unittest.TestCase):
         self.invalidStreetCityLength = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         self.invalidStateLength = "VAA"
         self.invalidStateAbbr = "TX"
-        self.invalidChars = "!@"
+        self.invalidCharsStreetCity = "123 Street!@"
+        self.invalidCharsState = "!@"
         
         # Initializes a valid address to attempt to change
         self.validAddress = Address("Street", "City", "VA")
@@ -57,7 +58,7 @@ class TestAddress(unittest.TestCase):
         
         # Ensures the Address object with false call to street
         # throws an assertion error
-        self.assertRaises(AssertionError, Address, self.invalidChars, "City", "VA")        
+        self.assertRaises(AssertionError, Address, self.invalidCharsStreetCity, "City", "VA")        
     
     # Anna
     def test_ConstructorInvalidStreetLength(self):
@@ -89,7 +90,7 @@ class TestAddress(unittest.TestCase):
         
         # Ensures the Address object with false call to city
         # throws an assertion error
-        self.assertRaises(AssertionError, Address, "Street", self.invalidChars, "VA")        
+        self.assertRaises(AssertionError, Address, "Street", self.invalidCharsStreetCity, "VA")        
     
     # Anna
     def test_ConstructorInvalidCityLength(self):
@@ -121,7 +122,7 @@ class TestAddress(unittest.TestCase):
         
         # Ensures the Address object with false call to state
         # throws an assertion error
-        self.assertRaises(AssertionError, Address, "Street", "City", self.invalidChars)        
+        self.assertRaises(AssertionError, Address, "Street", "City", self.invalidCharsState)        
     
     # Anna
     def test_ConstructorInvalidStateLength(self):
@@ -161,7 +162,7 @@ class TestAddress(unittest.TestCase):
         
         # Ensures the Address object with false call to changing street
         # throws an assertion error
-        self.assertRaises(AssertionError, self.validAddress.setStreet, self.invalidChars)        
+        self.assertRaises(AssertionError, self.validAddress.setStreet, self.invalidCharsStreetCity)        
     
     # Anna
     def test_setStreetInvalidLength(self):
@@ -193,7 +194,7 @@ class TestAddress(unittest.TestCase):
         
         # Ensures the Address object with false call to changing city
         # throws an assertion error
-        self.assertRaises(AssertionError, self.validAddress.setCity, self.invalidChars)        
+        self.assertRaises(AssertionError, self.validAddress.setCity, self.invalidCharsStreetCity)        
     
     # Anna
     def test_setCityInvalidLength(self):
@@ -225,7 +226,7 @@ class TestAddress(unittest.TestCase):
         
         # Ensures the Address object with false call to state
         # throws an assertion error
-        self.assertRaises(AssertionError, self.validAddress.setState, self.invalidChars)        
+        self.assertRaises(AssertionError, self.validAddress.setState, self.invalidCharsState)        
     
     # Anna
     def test_setStateInvalidLength(self):
