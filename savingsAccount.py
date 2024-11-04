@@ -171,6 +171,6 @@ class SavingsAccount(BankAccount):
     def __repr__(self):
         return (f"Account Number: {super().getAccountNumber()}\n"
                 f"Balance: {self._balance:.2f}\n"
-                f"Account Type: '{super().getAccountType()}')\n"
-                f"Overdrawn Count: '{self.getOverdrawnCount()}')\n"
+                f"Account Type: '{super().getAccountType()}'\n"
+                f"Overdrawn Count: '{self.getOverdrawnCount()}'\n"
                 f"Transactions:\n{super().printTransactionList()}")
