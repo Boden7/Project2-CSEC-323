@@ -1,25 +1,25 @@
 # Class containing address information for clients 
 # Hunter 
-
-import re
-
 class Address:
     
     def __init__(self, street: str, city: str, state: str):
 
-      assert re.match(r"^[a-zA-Z0-9\s]+$", street), "Invalid street name"
-      assert len(street) > 0 and len(street) <= 30, "The street must be a valid length."
-     
-      assert city.isalpha(), "The city must not contain any special characters."
-      assert len(city) > 0 and len(city) <= 30, "The city must be a valid length."
+        assert isinstance(street, str)
+        assert self.validStreet(street), "The street must not contain any special characters."
+        assert len(street) > 0 and len(street) <= 30, "The street must be a valid length."
+        
+        assert isinstance(city, str)
+        assert self.validCity(city), "The city must not contain any special characters."
+        assert len(city) > 0 and len(city) <= 30, "The city must be a valid length."
+        
+        assert isinstance(state, str)
+        assert state.isalpha(), "The state must not contain any special characters."
+        assert len(state) == 2, "State abbreviation must be two characters in length."
+        assert state in ["VA", "MD", "NJ", "PA", "DE", "NC", "WV", "DC"], "Invalid State designated."
       
-      assert state.isalpha(), "The state must not contain any special characters."
-      assert len(state) == 2, "State abbreviation must be two characters in length."
-      assert state in ["VA", "MD", "NJ", "PA", "DE", "NC", "WV", "DC"], "Invalid State designated."
-      
-      self._street = street
-      self._city = city
-      self._state = state 
+        self._street = street
+        self._city = city
+        self._state = state 
 
     # Accessor/getter for the street name
     # Hunter 
@@ -39,26 +39,49 @@ class Address:
     # Mutator/setter for the street
     # Hunter 
     def setStreet(self, street: str):
-        assert re.match(r"^[a-zA-Z0-9\s]+$", street), "The street must not contain any special characters."
+        assert self.validStreet(street), "The street must not contain any special characters."
         assert len(street) > 0 and len(street) <= 30, "The street must be a valid length."
         self._street = street
 
     # Mutator/setter for the city
     # Hunter
     def setCity(self, city: str):
-        assert re.match(r"^[a-zA-Z0-9\s]+$", city), "The city must not contain any special characters."
+        assert city.isalpha(), "The city must not contain any special characters."
         assert len(city) > 0 and len(city) <= 30, "The city must be a valid length."
         self._city = city
 
     # Mutator/setter for the state
     # Hunter 
     def setState(self, state: str):
-        assert re.match(r"^[a-zA-Z0-9\s]+$", state), "The state must not contain any special characters."
+        assert state.isalpha(), "The state must not contain any special characters."
         assert len(state) == 2, "State abbreviation must be two characters in length."
         assert state in ["VA", "MD", "NJ", "PA", "DE", "NC", "WV", "DC"], "Invalid state designated."
         self._state = state
 
-    # repr method for string representation of the full address:
+    # Check to be sure the street name doesn't have any special characters
+    # Boden
+    # @require every char in street is a letter, number, or space
+    # @return The validity of the street name
+    def validStreet(self, street: str):
+        for character in street:
+            if character.isalpha() or character.isdigit() or character == " ":
+                pass
+            else:
+                return False
+        return True
+    
+    # Check to be sure the city name doesn't have any special characters or numbers
+    # Boden
+    # @require every char in city is a letter, number, or space
+    # @return The validity of the city name
+    def validCity(self, street: str):
+        for character in street:
+            if character.isalpha() or character == " ":
+                pass
+            else:
+                return False
+        return True
+    # repr for full address:
     # Hunter 
     def __repr__(self):
-      return f"{self._street}, {self._city}, {self._state}"
+        return f"{self._street}, {self._city}, {self._state}"
