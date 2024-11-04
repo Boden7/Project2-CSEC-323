@@ -1,5 +1,5 @@
 """ 
-This module defines the a tester for the Address class.
+This module defines the tester for the Address class.
 @author: Anna Pitt
 @date: November 3, 2024
 
