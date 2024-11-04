@@ -476,3 +476,106 @@ class BankAccountTester(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+###### NEW TESTS: #######
+
+class BankAccountTester(unittest.TestCase):
+    # Anna
+    def setUp(self):
+        # Resets the bank account number for each test
+        BankAccount._nextAccountVal = 1000
+        # Constructs a TestBankAccount object with initial balance 500.0
+        self.testObject = TestBankAccount(500.0, 'checking')
+        
+        # Constructs a valid TestBankAccount object with no balance parameter
+        self.testObject2 = TestBankAccount(0.0, 'checking')        
+
+    def test_constructor_valid(self):
+        # Ensures the BankAccount object was made
+        self.assertTrue(isinstance(self.testObject, BankAccount))
+
+    # Anna
+    def test_constructor_invalid_balance_type(self):
+        # Ensures the TestBankAccount object with invalid balance type
+        # throws an assertion error
+        with self.assertRaises(AssertionError):
+            TestBankAccount("500.0", 'checking')
+
+    # Boden
+    def test_deposit_valid(self):
+        # Tests to ensure the deposit method functions normally    
+        result = self.testObject.deposit(100)
+        # Ensure the deposit was successful
+        self.assertTrue(result)
+        # Ensure the balance is correctly updated
+        self.assertEqual(self.testObject.getBalance(), 600.0)
+
+    # Boden
+    def test_deposit_invalid(self):
+        # Tests to ensure the deposit method rejects an incorrect input (negative)
+        result = self.testObject.deposit(-100)
+        # Ensure the deposit did not occur
+        self.assertFalse(result)
+        # Ensure the balance remained unchanged
+        self.assertEqual(self.testObject.getBalance(), 500.0)
+
+    # Boden
+    def test_withdraw_valid(self):
+        # Tests to ensure the withdrawal method works under normal conditions
+        result = self.testObject.withdraw(100)
+        # Ensure the withdrawal was successful
+        self.assertTrue(result)
+        # Ensure the balance was updated correctly
+        self.assertEqual(self.testObject.getBalance(), 400.0)
+
+    # Boden
+    def test_withdraw_invalid(self):
+        # Tests to ensure the withdrawal method handles overdraft
+        result = self.testObject.withdraw(600)
+        # Ensure the withdrawal was successful even with overdraft
+        self.assertTrue(result)
+        # Ensure the balance was updated correctly
+        self.assertEqual(self.testObject.getBalance(), -200.0)
+
+    # Boden
+    def test_transfer_valid(self):
+        # Tests the transfer method to ensure everything works under proper conditions
+        self.testObject2.deposit(1000)  # Initialize the second account
+        result = self.testObject.transfer(200, self.testObject2)
+        # Ensure the transfer was successful
+        self.assertTrue(result)
+        # Ensure the balance is correctly updated for account 1
+        self.assertEqual(self.testObject.getBalance(), 300.0)
+        # Ensure the balance is correctly updated for account 2
+        self.assertEqual(self.testObject2.getBalance(), 1200.0)
+
+    # Boden
+    def test_transfer_invalid(self):
+        # Tests the transfer method to ensure it rejects invalid amounts
+        result = self.testObject.transfer(1000, self.testObject2)
+        # Ensure the transfer was not successful
+        self.assertFalse(result)
+        # Ensure the balance is not updated for account 1
+        self.assertEqual(self.testObject.getBalance(), 500.0)
+        # Ensure the balance is not updated for account 2
+        self.assertEqual(self.testObject2.getBalance(), 0.0)
+
+    # Anna
+    def test_equality(self):
+        # Checks if the equality operator works on two objects that are the same
+        self.assertTrue(self.testObject == self.testObject)
+        # Checks if the not equal operator works on two objects that are different
+        self.assertFalse(self.testObject == self.testObject2)
+
+    # Anna
+    def test_get_balance(self):
+        # Determines the constructor's stored balance
+        self.assertEqual(self.testObject.getBalance(), 500.0)
+
+    # Anna
+    def test_print_transaction_list_empty(self):
+        # Checks that an empty transaction list returns the correct message
+        self.assertEqual(self.testObject.printTransactionList(), "There are no valid transactions to display.")
+
+if __name__ == '__main__':
+    unittest.main()
