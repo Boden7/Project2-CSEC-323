@@ -44,6 +44,11 @@ class BankAccount:
         pass
 
     # Accessor/getter to retrieve the balance of an account: 
+    # Boden
+    def getAccountType(self):
+        return self._accountType
+        
+    # Accessor/getter to retrieve the balance of an account: 
     # Anna 
     def getBalance(self):
         return self._balance
