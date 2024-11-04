@@ -25,6 +25,7 @@ class TestAddress(unittest.TestCase):
     # Anna
     def setUp(self):
         # Initializes incorrect streets, cities, and states
+        self.invalidType = 100
         self.invalidEmpty = ""
         self.invalidStreetCityLength = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         self.invalidStateLength = "VAA"
@@ -33,6 +34,14 @@ class TestAddress(unittest.TestCase):
         
         # Initializes a valid address to attempt to change
         self.validAddress = Address("Street", "City", "VA")
+    
+    # Anna
+    def test_ConstructorInvalidStreetType(self):
+        print("\nTesting the constructor with an invalid street type") 
+        
+        # Ensures the Address object with false call to street
+        # throws an assertion error
+        self.assertRaises(AssertionError, Address, self.invalidType, "City", "VA")
     
     # Anna
     def test_ConstructorInvalidStreetBlank(self):
@@ -59,6 +68,14 @@ class TestAddress(unittest.TestCase):
         self.assertRaises(AssertionError, Address, self.invalidStreetCityLength, "City", "VA")
     
     # Anna
+    def test_ConstructorInvalidCityType(self):
+        print("\nTesting the constructor with an invalid city type") 
+        
+        # Ensures the Address object with false call to street
+        # throws an assertion error
+        self.assertRaises(AssertionError, Address, "Street", self.invalidType, "VA")      
+    
+    # Anna
     def test_ConstructorInvalidCityBlank(self):
         print("\nTesting the constructor with a blank city (too short)") 
         
@@ -78,9 +95,17 @@ class TestAddress(unittest.TestCase):
     def test_ConstructorInvalidCityLength(self):
         print("\nTesting the constructor with a city that is too long") 
         
-        # Ensures the Address object with false call to street
+        # Ensures the Address object with false call to city
         # throws an assertion error
         self.assertRaises(AssertionError, Address, "Street", self.invalidStreetCityLength, "VA")
+    
+    # Anna
+    def test_ConstructorInvalidStateType(self):
+        print("\nTesting the constructor with an invalid state type") 
+        
+        # Ensures the Address object with false call to state
+        # throws an assertion error
+        self.assertRaises(AssertionError, Address, "Street", "City", self.invalidType)    
     
     # Anna
     def test_ConstructorInvalidStateBlank(self):
@@ -115,6 +140,14 @@ class TestAddress(unittest.TestCase):
         self.assertRaises(AssertionError, Address, "Street", "City", self.invalidStateAbbr)
     
     # Anna
+    def test_setStreetInvalidType(self):
+        print("\nTesting setStreet() with an invalid street type") 
+        
+        # Ensures the Address object with false call to changing street
+        # throws an assertion error
+        self.assertRaises(AssertionError, self.validAddress.setStreet, self.invalidType)    
+    
+    # Anna
     def test_setStreetInvalidBlank(self):
         print("\nTesting setStreet() with a blank street (too short)") 
         
@@ -139,6 +172,14 @@ class TestAddress(unittest.TestCase):
         self.assertRaises(AssertionError, self.validAddress.setStreet, self.invalidStreetCityLength)
     
     # Anna
+    def test_setCityInvalidType(self):
+        print("\nTesting setCity() with an invalid city type") 
+        
+        # Ensures the Address object with false call to changing city
+        # throws an assertion error
+        self.assertRaises(AssertionError, self.validAddress.setCity, self.invalidType)    
+    
+    # Anna
     def test_setCityInvalidBlank(self):
         print("\nTesting setCity() with a blank city (too short)") 
         
@@ -161,6 +202,14 @@ class TestAddress(unittest.TestCase):
         # Ensures the Address object with false call to changing street
         # throws an assertion error
         self.assertRaises(AssertionError, self.validAddress.setCity, self.invalidStreetCityLength)
+    
+    # Anna
+    def test_setStateInvalidType(self):
+        print("\nTesting setState() with an invalid state type") 
+        
+        # Ensures the Address object with false call to changing state
+        # throws an assertion error
+        self.assertRaises(AssertionError, self.validAddress.setState, self.invalidType)    
     
     # Anna
     def test_setStateInvalidBlank(self):
