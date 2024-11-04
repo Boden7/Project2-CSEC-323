@@ -94,3 +94,11 @@ class BankAccount:
     @abstractmethod
     def __repr__(self):
         pass
+
+    # method that checks for equality between accounts 
+    def __eq__(self, other):
+        if not isinstance(other, BankAccount):
+            return NotImplemented
+        return (self._accountNum == other._accountNum and
+                self._balance == other._balance and
+                self._accountType == other._accountType)
