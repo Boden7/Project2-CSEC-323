@@ -29,4 +29,4 @@ class PhoneNumber:
 
     # string representation of the clients phone number 
     def __repr__(self):
-        return f"+1({self._phoneNum[0:3]}) {self._phoneNum[3:6]}-{self._phoneNum[6:10]}"
+        return f"+1({self._phoneNum[0:3]}){self._phoneNum[3:6]}-{self._phoneNum[6:10]}"
