@@ -11,7 +11,7 @@ import unittest
 from unittest.mock import patch
 from name import Name
 
-class TestPhoneNumber(unittest.TestCase):
+class TestName(unittest.TestCase):
     # Tests not done in this tester that have been tested elsewhere:
     # - Valid constructor for a Name (tested in Client tester and setUp)
     # - Call to getFirstName() (tested in Client tester)
@@ -25,15 +25,22 @@ class TestPhoneNumber(unittest.TestCase):
     # Anna
     def setUp(self):
         # Initializes incorrect first and last names
+        self.invalidType = 100
         self.invalidFirstLength = "aaaaaaaaaaaaaaaaaaaaaaaaaa"
         self.invalidLastLength = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         self.invalidChars = "!@#$%"
-        # Check if needed!
-        # self.invalidInstance = Name
         self.invalidEmpty = ""
         
         # Initializes a valid name to attempt to change
         self.validName = Name("First", "Last")
+    
+    # Anna
+    def test_ConstructorInvalidFirstNameType(self):
+        print("\nTesting the constructor with an invalid first name type") 
+        
+        # Ensures the Name object with false call to first name
+        # throws an assertion error
+        self.assertRaises(AssertionError, Name, self.invalidType, "Last")    
     
     # Anna
     def test_ConstructorInvalidFirstNameBlank(self):
@@ -60,6 +67,14 @@ class TestPhoneNumber(unittest.TestCase):
         self.assertRaises(AssertionError, Name, self.invalidFirstLength, "Last")
         
     # Anna
+    def test_ConstructorInvalidLastNameType(self):
+        print("\nTesting the constructor with invalid last name type") 
+        
+        # Ensures the Name object with false call to last name
+        # throws an assertion error        
+        self.assertRaises(AssertionError, Name, "First", self.invalidType)    
+    
+    # Anna
     def test_ConstructorInvalidLastNameBlank(self):
         print("\nTesting the constructor with blank last name (too short)") 
         
@@ -84,6 +99,14 @@ class TestPhoneNumber(unittest.TestCase):
         self.assertRaises(AssertionError, Name, "First", self.invalidLastLength)
     
     # Anna
+    def test_setFirstInvalidFirstNameType(self):
+        print("\nTesting setFirst() with invalid type") 
+        
+        # Ensures the Name object with false call to changing first name
+        # throws an assertion error        
+        self.assertRaises(AssertionError, self.validName.setFirst, self.invalidType)    
+    
+    # Anna
     def test_setFirstInvalidFirstNameBlank(self):
         print("\nTesting setFirst() with blank input (too short)") 
         
@@ -106,6 +129,14 @@ class TestPhoneNumber(unittest.TestCase):
         # Ensures the Name object with false call to changing first name
         # throws an assertion error        
         self.assertRaises(AssertionError, self.validName.setFirst, self.invalidFirstLength)
+    
+    # Anna
+    def test_setLastInvalidLastNameType(self):
+        print("\nTesting setLast() with an invalid type") 
+        
+        # Ensures the Name object with false call to changing last name
+        # throws an assertion error        
+        self.assertRaises(AssertionError, self.validName.setLast, self.invalidType)    
     
     # Anna
     def test_setLastInvalidLastNameBlank(self):
