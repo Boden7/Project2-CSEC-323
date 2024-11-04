@@ -96,6 +96,7 @@ class BankAccount:
         pass
 
     # method that checks for equality between accounts 
+    # Hunter 
     def __eq__(self, other):
         if not isinstance(other, BankAccount):
             return NotImplemented
