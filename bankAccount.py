@@ -55,7 +55,7 @@ class BankAccount:
 
     def getNextAccountNumber(self):
       # returns the next available account number:
-      return self._nextAccountVal
+      return BankAccount._nextAccountVal
 
     # Returns a String representation of the transactions for a Bank Account object
     #
