@@ -1,5 +1,10 @@
-# Class containing address information for clients 
-# Hunter 
+""" 
+This module defines the Address class.
+@author: Hunter Peacock, Boden Kahn, and Anna Pitt
+@date: November 4, 2024
+
+Class containing address information for clients
+""" 
 class Address:
 
     # Constructs an Address object.
