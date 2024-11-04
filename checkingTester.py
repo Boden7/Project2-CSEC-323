@@ -3,11 +3,6 @@
 import unittest
 from checkingAccount import CheckingAccount
 
-# @authors Brenden Shelton
-# Date: 11/3/24
-import unittest
-from checkingAccount import CheckingAccount
-
 class TestCheckingAccount(unittest.TestCase):
     
     def setUp(self):
