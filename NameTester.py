@@ -9,7 +9,7 @@ Test each method with at least one unit test
 
 import unittest
 from unittest.mock import patch
-from Name import Name
+from name import Name
 
 class TestPhoneNumber(unittest.TestCase):
     # Tests not done in this tester that have been tested elsewhere:
