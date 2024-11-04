@@ -39,21 +39,21 @@ class Address:
     # Mutator/setter for the street
     # Hunter 
     def setStreet(self, street: str):
-        assert street.isalpha(), "The street must not contain any special characters."
+        assert re.match(r"^[a-zA-Z0-9\s]+$", street), "The street must not contain any special characters."
         assert len(street) > 0 and len(street) <= 30, "The street must be a valid length."
         self._street = street
 
     # Mutator/setter for the city
     # Hunter
     def setCity(self, city: str):
-        assert city.isalpha(), "The city must not contain any special characters."
+        assert re.match(r"^[a-zA-Z0-9\s]+$", city), "The city must not contain any special characters."
         assert len(city) > 0 and len(city) <= 30, "The city must be a valid length."
         self._city = city
 
     # Mutator/setter for the state
     # Hunter 
     def setState(self, state: str):
-        assert state.isalpha(), "The state must not contain any special characters."
+        assert re.match(r"^[a-zA-Z0-9\s]+$", state), "The state must not contain any special characters."
         assert len(state) == 2, "State abbreviation must be two characters in length."
         assert state in ["VA", "MD", "NJ", "PA", "DE", "NC", "WV", "DC"], "Invalid state designated."
         self._state = state

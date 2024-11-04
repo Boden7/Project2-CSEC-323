@@ -22,7 +22,7 @@ class CheckingAccount(BankAccount):
         depositTransaction = Transaction("deposit", amount)
         # add deposit to list of transactions
         self._accountTransactions.append(depositTransaction)
-        self.writeTransaction(depositTransaction)
+        self._writeTransaction(depositTransaction)
         self._balance += amount
         return True
 
