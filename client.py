@@ -45,19 +45,17 @@ class Client: # Hunter
       # returns the next available client number:
       return Client.client_counter
    
-   # repr method for client class: 
-    # Boden
-    def __repr__(self): 
-        details = (
-        f"Client Number: {self._clientNumber}\n"
-        f"Name: {self._name.__repr__()}\n"
-        f"Phone Number: {self._phoneNumber.__repr__()}\n"
-        f"Address: {self._address.__repr__()}\n"
-        f"Bank Accounts:\n"
-        )
-        for account in self._bankAccounts:
-            details += (f"{account.__repr__()}\n")
-        return(details)
+   def __repr__(self): 
+      details = (
+      f"Client Number: {self._clientNumber}\n"
+      f"Name: {self._name.__repr__()}\n"
+      f"Phone Number: {self._phoneNumber.__repr__()}\n"
+      f"Address: {self._address.__repr__()}\n"
+      f"Bank Accounts:\n"
+      )
+      for account in self._bankAccounts:
+        details += (f"{account.__repr__()}\n")
+      return(details)
 
    # check to see if client numbers are equal
    # Brenden
