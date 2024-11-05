@@ -1,9 +1,9 @@
 """ 
-This module defines the CheckingAccount class.
+This module defines the SavingsAccount class.
 @author: Hunter Peacock, Boden Kahn, Brenden Shelton, and Anna Pitt
 @date: November 4, 2024
 
-A class to represent the data elements and methods required to implement a CheckingAccount
+A class to represent the data elements and methods required to implement a SavingsAccount
 This class is inherited from the BankAccount superclass
 """
 
@@ -13,15 +13,47 @@ from transaction import Transaction
 from AES_CBC import encrypt_AES_CBC, decrypt_AES_CBC
 
 # Hunter 
-class CheckingAccount(BankAccount):
-
-    # Constructs a CheckingAccount object.
+class SavingsAccount(BankAccount):
+    
+    # Constructs a SavingsAccount object.
     #
-    #  @param balanceIn: The starting balance of the Bank Account (Floating point)
+    #  @param balanceIn: The starting balance of the Savings Account (Floating point)
     #
-    #  @ensure CheckingAccount object successfully created
+    #  @ensure SavingsAccount object successfully created    
     def __init__(self, balanceIn = 0.0):
-        super().__init__(balanceIn, account_type = 'checking')
+        super().__init__(balanceIn, account_type = 'savings')
+
+    # An accessor/getter method for the overdraft fee
+    #
+    # @return: The overdraft fee (floating-point value)
+    # Anna
+    def getOverdraft(self):
+        return BankAccount._overdraftFee
+
+    # Calculates the interest payment for a savings account, adds a new interest transaction
+    # to the account, and updates the account balance
+    #
+    #  @require balance > 0
+    #
+    #  @return if the interest was added or not    
+    # Hunter 
+    def calcInterest(self):
+        assert(self._balance > 0)
+        interest_amount = self._balance * BankAccount._intRates['savings']
+        transaction = Transaction("interest", interest_amount)
+        # add interest to list of transactions
+        self._accountTransactions.append(transaction)
+        self.writeTransaction(transaction)
+        self.deposit(interest_amount)
+        return True
+
+    # An accessor/getter method for the number of times the account has been
+    # overdrawn
+    #
+    #   @return: The overdrawn counter associated with the Bank Account (integer)
+    # Anna
+    def getOverdrawnCount(self):
+        return self._overdrawnCount
 
     # Deposits money into the account if the transaction is valid and records the transaction
     #
@@ -41,6 +73,11 @@ class CheckingAccount(BankAccount):
         self._accountTransactions.append(depositTransaction)
         self._writeTransaction(depositTransaction)
         self._balance += amount
+        if self.getBalance() >= 100.0:
+            self._overdrawnCount = self._overdrawnCount - 1
+        if self.getBalance() >= 10000.0:
+            # if the account balance exceeds 10000 reset overdrawn counter:
+            self._overdrawnCount = 0
         return True
 
     # Withdraws money from the account if the transaction is valid and records the transaction
@@ -54,19 +91,31 @@ class CheckingAccount(BankAccount):
     #  @return The success or failure of the withdrawal
     # Boden
     def withdraw(self, amount):
+        # Make sure the amount to withdrawal is not negative
         assert(isinstance(amount, float))
-        assert(amount > 0)
-        if self._balance >= amount:
+        assert(amount <= 0)
+        # Ensure the balance is at least $250 more than the withdrawal amount
+        if amount < self.getBalance() + 250.0 and self._overdrawnCount < 3:
             # Process the transaction and update necessary variables
             withdrawalTransaction = Transaction("withdrawal", amount)
             # add withdrawal to list of transactions
             self._accountTransactions.append(withdrawalTransaction)
-            self._writeTransaction(withdrawalTransaction)
             self._balance -= amount
+            # If the withdrawal would put the balance in the negative, add an
+            # overdraft fee and increment the overdrawn counter
+            if self.getBalance() < 0.0:
+                # Process the transaction and update necessary variables
+                self._balance -= self.getOverdraft()
+                penaltyTransaction = Transaction("penalty", self.getOverdraft())
+                # add penalty to list of transactions
+                self._accountTransactions.append(penaltyTransaction)
+                self._overdrawnCount = self.getOverdrawnCount() + 1 
+                print("The account is overdrawn")
             return True
+        # If the overdraw limit is exceeded or the withdraw is not possible return False
         else:
-            print("Withdrawal denied: insufficient funds.")
-            return False
+            print("Transaction denied")
+        return False
 
     # Transfer an amount of money from one account to another
     #
@@ -85,35 +134,18 @@ class CheckingAccount(BankAccount):
             return True
         return False
 
-    # Calculates the interest payment for a checking account, adds a new interest transaction
-    # to the account, and updates the account balance
-    #
-    #  @require balance > 0
-    #
-    #  @return if the interest was added or not    
-    # Hunter
-    def calcInterest(self):
-        assert(self._balance > 0), "No interest can be added to an account with a negative balance."
-        interest_amount = self._balance * BankAccount._intRates['checking']
-        transaction = Transaction("interest", interest_amount)
-        # add interest to list of transactions
-        self._accountTransactions.append(transaction)
-        self._writeTransaction(transaction)
-        self.deposit(interest_amount)
-        return True
-    
-    # Prints a String representation of all transactions for a Checking Account object 
-    # Hunter
+    # Prints a String representation of all transactions for a Savings Account object      
+    # Hunter 
     def printTransactionList(self):
-        print("Checking Account Transactions:")
+        print("Savings Account Transactions:")
         print(super().printTransactionList())
 
-    # Method to write all transactions made on a checking account to the checking.txt
+    # Method to write all transactions made on a savings account to the savings.txt
     # file
     # Data is encrypted first
     #
     #  @param transaction: The transaction to be written to the file
-    # Hunter, fixed by Boden
+    # Hunter 
     def _writeTransaction(self, transaction: Transaction):
         # Set the Debug Flag
         DEBUG = False
@@ -127,7 +159,7 @@ class CheckingAccount(BankAccount):
             print("The length of the Initialization Vector is %d bytes" % len(iv))
 
         # Open the file to write the data
-        with open("checking.txt", "wb") as outfile:
+        with open("savings.txt", "wb") as outfile:
             # Convert transaction to string, then encrypt
             transaction_str = str(transaction)
             # Encrypt the transaction data
@@ -140,20 +172,19 @@ class CheckingAccount(BankAccount):
             outfile.write(b"\n")
 
         if DEBUG:
-            print("Transactions written to checking.txt.")
+            print("Transactions written to savings.txt.")
 
     # Method to read all transactions made on a checking account to the checking.txt
-    # file
-    # Data is decrypted first
+    # file, data is decrypted first
     # Hunter
-    def _readTransactions(self):
+    def readTransactions(self):
         # Set the Debug Flag
         DEBUG = False
         key = b'MySuperSecretKey1222222222222222'
         iv = b'MySuperSecretIV1'
 
         # Open the file to read the data
-        with open("checking.txt", "rb") as infile:
+        with open("savings.txt", "rb") as infile:
             length = infile.readline().rstrip().decode()
 
             while length != "":
@@ -163,17 +194,15 @@ class CheckingAccount(BankAccount):
                 data = infile.read(length)
                 data = decrypt_AES_CBC(data, key, iv)
                 # process the decrypted data: 
-                print("Decrypted transaction:", data)
+                print("Decrypted transaction:", data.decode())
                 infile.readline()  # Skip the newline
                 length = infile.readline().rstrip().decode()
 
 
-    # Returns a String representation of a Checking Account object
-    #
-    # @return: A String representation of the Checking Account object (String)    
+    # repr method to print the information of a clients checking account: 
     def __repr__(self):
-        details = (f"Account Number: {super().getAccountNumber()}\n"
-                    f"Balance: {self._balance:.2f}\n"
-                    f"Account Type: '{super().getAccountType()}'\n"
-                    f"Transactions:\n{super().printTransactionList()}")
-        return (details)
+        return (f"Account Number: {super().getAccountNumber()}\n"
+                f"Balance: {self._balance:.2f}\n"
+                f"Account Type: '{super().getAccountType()}'\n"
+                f"Overdrawn Count: '{self.getOverdrawnCount()}'\n"
+                f"Transactions:\n{super().printTransactionList()}")
