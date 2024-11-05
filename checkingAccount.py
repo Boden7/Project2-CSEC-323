@@ -1,19 +1,36 @@
+""" 
+This module defines the CheckingAccount class.
+@author: Hunter Peacock, Boden Kahn, Brenden Shelton, and Anna Pitt
+@date: November 4, 2024
+
+A class to represent the data elements and methods required to implement a CheckingAccount
+This class is inherited from the BankAccount superclass
+"""
+
+# Import statements
 from bankAccount import BankAccount
 from transaction import Transaction
 from AES_CBC import encrypt_AES_CBC, decrypt_AES_CBC
-# Class representing a checking account 
-# Inherited from the BankAccount superclass
+
 # Hunter 
 class CheckingAccount(BankAccount):
 
+    # Constructs a CheckingAccount object.
+    #
+    #  @param balanceIn: The starting balance of the Bank Account (Floating point)
+    #
+    #  @ensure CheckingAccount object successfully created
     def __init__(self, balanceIn = 0.0):
         super().__init__(balanceIn, account_type = 'checking')
 
     # Deposits money into the account if the transaction is valid and records the transaction
+    #
+    #  @param amount: the amount to be deposited
+    #
+    #  @require amount must be a positive, floating-point value
+    #
+    #  @return The success or failure of the deposit
     # Boden
-    #@param amount: the amount to be deposited
-    #@require amount > 0
-    #@return The success or failure of the deposit
     def deposit(self, amount):
         # Make sure the amount to deposit a float is not negative
         assert(isinstance(amount, float))
@@ -26,13 +43,16 @@ class CheckingAccount(BankAccount):
         self._balance += amount
         return True
 
-    # Withdrawals money from the account if the transaction is valid and records the transaction; 
+    # Withdraws money from the account if the transaction is valid and records the transaction
     # If the transaction is valid but the account will be overdrawn, applies an overdraft fee and 
-    # updates the counter for overdraws
+    # updates the counter for overdrawn
+    #
+    #  @param amount: the amount to be withdrawn
+    #
+    #  @require amount must be a positive, floating-point value
+    #
+    #  @return The success or failure of the withdrawal
     # Boden
-    #@param amount: the amount to be withdrawn
-    #@require amount > 0
-    #@return The success or failure of the withdrawal
     def withdraw(self, amount):
         assert(isinstance(amount, float))
         assert(amount > 0)
@@ -49,9 +69,11 @@ class CheckingAccount(BankAccount):
             return False
 
     # Transfer an amount of money from one account to another
-    # @param amount: The amount being transferred to the other account
-    # @param otherAccount: The account that is being transferred the money (if possible)
-    # @return: True if the money was able to be transferred and False if not
+    #
+    #  @param amount: The amount being transferred to the other account
+    #  @param otherAccount: The account that is being transferred the money (if possible)
+    #
+    #  @return: True if the money was able to be transferred and False if not
     # Boden
     def transfer(self, amount, otherAccount):
         if self.withdraw(amount):
@@ -63,10 +85,15 @@ class CheckingAccount(BankAccount):
             return True
         return False
 
-    # Method to calculate and apply the interest for checking account:
+    # Calculates the interest payment for a checking account, adds a new interest transaction
+    # to the account, and updates the account balance
+    #
+    #  @require balance > 0
+    #
+    #  @return if the interest was added or not    
     # Hunter
     def calcInterest(self):
-        assert(self._balance > 0)
+        assert(self._balance > 0), "No interest can be added to an account with a negative balance."
         interest_amount = self._balance * BankAccount._intRates['checking']
         transaction = Transaction("interest", interest_amount)
         # add interest to list of transactions
@@ -75,14 +102,17 @@ class CheckingAccount(BankAccount):
         self.deposit(interest_amount)
         return True
     
-    # Prints all transactions of a checking account
-    # Hunter 
+    # Returns a String representation of all transactions for a Checking Account object
+    #
+    # @return: A String representation of the transactions stored within a Checking Account object (String)    
+    # Hunter
     def printTransactionList(self):
         print("Checking Account Transactions:")
         print(super().printTransactionList())
 
     # Method to write all transactions made on a checking account to the checking.txt
-    # file, data is encrypted first
+    # file
+    # Data is encrypted first
     # Hunter, fixed by Boden
     def _writeTransaction(self, transaction: Transaction):
         # Set the Debug Flag
@@ -113,9 +143,10 @@ class CheckingAccount(BankAccount):
             print("Transactions written to checking.txt.")
 
     # Method to read all transactions made on a checking account to the checking.txt
-    # file, data is decrypted first
+    # file
+    # Data is decrypted first
     # Hunter
-    def readTransactions(self):
+    def _readTransactions(self):
         # Set the Debug Flag
         DEBUG = False
         key = b'MySuperSecretKey1222222222222222'
@@ -137,12 +168,12 @@ class CheckingAccount(BankAccount):
                 length = infile.readline().rstrip().decode()
 
 
-    # repr method to print the information of a clients checking account: 
+    # Returns a String representation of a Checking Account object
+    #
+    # @return: A String representation of the Checking Account object (String)    
     def __repr__(self):
         details = (f"Account Number: {super().getAccountNumber()}\n"
                     f"Balance: {self._balance:.2f}\n"
                     f"Account Type: '{super().getAccountType()}'\n"
                     f"Transactions:\n{super().printTransactionList()}")
         return (details)
-
-
