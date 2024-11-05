@@ -100,6 +100,8 @@ class Client:
    #
    # @param other: The client to compare the original client (self) to
    #
+   # @require: other must be a Client instance
+   #
    # @return: True if the two Clients are equal, False if not
    # Brenden
    def __eq__(self, other):
