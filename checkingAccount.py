@@ -111,6 +111,8 @@ class CheckingAccount(BankAccount):
     # Method to write all transactions made on a checking account to the checking.txt
     # file
     # Data is encrypted first
+    #
+    #  @param transaction: The transaction to be written to the file
     # Hunter, fixed by Boden
     def _writeTransaction(self, transaction: Transaction):
         # Set the Debug Flag
