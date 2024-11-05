@@ -102,9 +102,7 @@ class CheckingAccount(BankAccount):
         self.deposit(interest_amount)
         return True
     
-    # Returns a String representation of all transactions for a Checking Account object
-    #
-    # @return: A String representation of the transactions stored within a Checking Account object (String)    
+    # Prints a String representation of all transactions for a Checking Account object   
     # Hunter
     def printTransactionList(self):
         print("Checking Account Transactions:")
