@@ -92,14 +92,17 @@ class Client:
    #  @return: A String representation of the Client object (String)   
    def __repr__(self): 
       details = (
-      f"Client Number: {self._clientNumber}\n"
+      f"Client Number: {self.getClientNumber()}\n"
       f"Name: {self._name.__repr__()}\n"
       f"Phone Number: {self._phoneNumber.__repr__()}\n"
       f"Address: {self._address.__repr__()}\n"
-      f"Bank Accounts:\n"
       )
-      for account in self._bankAccounts:
-         details += (f"{account.__repr__()}\n")
+      if len(self._bankAccounts) == 0:
+         details += f"There are no bank accounts associated with client {self.getClientNumber()}\n"
+      else:
+         details += "Bank Accounts: \n"
+         for account in self._bankAccounts:
+            details += (f"{account.__repr__()}\n")
       return(details)
 
    # Compares two Clients to see if they are the same
