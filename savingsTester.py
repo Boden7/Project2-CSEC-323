@@ -1,3 +1,6 @@
+# Testers for the SavingsAccount class:
+# @authors: Hunter Peacock 
+
 import unittest
 from savingsAccount import SavingsAccount
 from transaction import Transaction
@@ -73,9 +76,9 @@ class TestSavingsAccount(unittest.TestCase):
     def test_calc_interest(self):
         account = SavingsAccount(1000.0)
         
-        # Assume the interest rate for savings accounts is 0.02 (2%)
+        # Assume the interest rate for savings accounts is 0.04 (4%)
         account.calcInterest()
-        self.assertEqual(account.getBalance(), 1000.0 * 1.02)  # Balance should have increased by 2%
+        self.assertEqual(account.getBalance(), 1000.0 * 1.04)  # Balance should have increased by 4%
 
     # Test getting the overdraft fee
     def test_get_overdraft(self):
@@ -89,8 +92,8 @@ class TestSavingsAccount(unittest.TestCase):
         """Test interest calculation and application to balance."""
         print("Testing interest calculation...")
         self.account.calcInterest()
-        expected_balance = 100.0 * (1 + 0.015)  # 1.5% interest applied
-        self.assertAlmostEqual(self.account.getBalance(), expected_balance, places=2)
+        expected_balance = 100.0 * (1 + 0.04)  # 4% interest applied
+        self.assertAlmostEqual(self.account.getBalance(), expected_balance, places = 2)
     
     def test_transaction_listing(self):
         """Test printing the transaction list."""
@@ -113,7 +116,7 @@ class TestSavingsAccount(unittest.TestCase):
         self.account.readTransactions()
         # Ensure no errors during the read process
 
-    # Test transaction logging with a mock transaction
+    # Test transaction logging in the list with transaction
     def test_transaction_logging(self):
         account = SavingsAccount(1000.0)
         account.deposit(200.0)
