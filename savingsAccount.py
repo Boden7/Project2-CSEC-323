@@ -22,6 +22,7 @@ class SavingsAccount(BankAccount):
     #  @ensure SavingsAccount object successfully created    
     def __init__(self, balanceIn = 0.0):
         super().__init__(balanceIn, account_type = 'savings')
+        self._overdrawnCount = 0  # Counter for overdrafts (savings only)
 
     # An accessor/getter method for the overdraft fee
     #
@@ -54,6 +55,13 @@ class SavingsAccount(BankAccount):
     # Anna
     def getOverdrawnCount(self):
         return self._overdrawnCount
+    
+    # An mutator/setter method for the number of times the account has been
+    # overdrawn
+    #
+    # Boden
+    def _setOverdrawnCount(self, overdrawnCount: int):
+        self._overdrawnCount = overdrawnCount
 
     # Deposits money into the account if the transaction is valid and records the transaction
     #
@@ -74,7 +82,7 @@ class SavingsAccount(BankAccount):
         self._writeTransaction(depositTransaction)
         self._balance += amount
         if self.getBalance() >= 100.0:
-            self._overdrawnCount = self._overdrawnCount - 1
+            self._setOverdrawnCount (self._overdrawnCount - 1)
         if self.getBalance() >= 10000.0:
             # if the account balance exceeds 10000 reset overdrawn counter:
             self._overdrawnCount = 0
@@ -109,7 +117,7 @@ class SavingsAccount(BankAccount):
             penaltyTransaction = Transaction("penalty", self.getOverdraft())
             # add penalty to list of transactions
             self._accountTransactions.append(penaltyTransaction)
-            self._overdrawnCount = self.getOverdrawnCount() + 1 
+            self._setOverdrawnCount(self.getOverdrawnCount() + 1)
             print("The account is overdrawn")
         return True
 
