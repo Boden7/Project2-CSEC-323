@@ -157,5 +157,4 @@ class BankAccount:
     def __eq__(self, other):
         assert(isinstance(other, BankAccount)), "Comparison must be between two BankAccount instances."
         return (self._accountNum == other._accountNum and
-                self._balance == other._balance and
                 self._accountType == other._accountType)
