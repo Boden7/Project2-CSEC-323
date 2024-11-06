@@ -42,8 +42,8 @@ class SavingsAccount(BankAccount):
     #  @return if the interest was added or not    
     # Hunter 
     def calcInterest(self):
-        assert(self._balance > 0)
-        interest_amount = self._balance * BankAccount._intRates['savings']
+        assert(self.getBalance() > 0)
+        interest_amount = self.getBalance() * BankAccount._intRates['savings']
         transaction = Transaction("interest", interest_amount)
         # add interest to list of transactions
         self._accountTransactions.append(transaction)
