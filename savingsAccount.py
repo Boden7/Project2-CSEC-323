@@ -15,6 +15,9 @@ from AES_CBC import encrypt_AES_CBC, decrypt_AES_CBC
 # Hunter 
 class SavingsAccount(BankAccount):
     
+    # A private class variable that holds the overdraft fee amounts for savings accounts
+    _overdraftFee = [20.00, 30.00, 50.00]
+
     # Constructs a SavingsAccount object.
     #
     #  @param balanceIn: The starting balance of the Savings Account (Floating point)
@@ -29,7 +32,7 @@ class SavingsAccount(BankAccount):
     # @return: The overdraft fee (floating-point value)
     # Anna
     def getOverdraft(self):
-        return BankAccount._overdraftFee
+        return self._overdraftFee[self.getOverdrawnCount - 1]
 
     # Calculates the interest payment for a savings account, adds a new interest transaction
     # to the account, and updates the account balance
@@ -82,7 +85,7 @@ class SavingsAccount(BankAccount):
         self._writeTransaction(depositTransaction)
         self._balance += amount
         if self.getBalance() >= 100.0:
-            self._setOverdrawnCount (self._overdrawnCount - 1)
+            self._setOverdrawnCount (self._overdrawnCount() - 1)
         if self.getBalance() >= 10000.0:
             # if the account balance exceeds 10000 reset overdrawn counter:
             self._overdrawnCount = 0
@@ -100,8 +103,8 @@ class SavingsAccount(BankAccount):
     # Boden
     def withdraw(self, amount):
         # Make sure the amount to withdrawal is not negative
-        assert(isinstance(amount, float))
-        assert(amount <= 0)
+        assert isinstance(amount, float)
+        assert amount >= 0, "Cannot withdraw a negative number"
         # Ensure the balance is at least $250 more than the withdrawal amount
         assert amount < self.getBalance() + 250.0 and self._overdrawnCount < 3, "Transaction denied"
         # Process the transaction and update necessary variables
