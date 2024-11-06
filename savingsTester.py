@@ -27,7 +27,7 @@ class TestSavingsAccount(unittest.TestCase):
         self.assertTrue(success)
         self.assertEqual(account.getBalance(), 150.0)
 
-    # Test deposit method (negative amount, should raise an assertion error)
+    # Test deposit method (negative amount, should raise the assertion error)
     def test_deposit_invalid(self):
         account = SavingsAccount(100.0)
         with self.assertRaises(AssertionError):
@@ -51,10 +51,10 @@ class TestSavingsAccount(unittest.TestCase):
         self.assertTrue(success)
         self.assertEqual(account.getBalance(), 50.0 - account.getOverdraft())
         
-        # Ensure the overdraft count is incremented
+        # Ensure that the overdraft count is incremented
         self.assertEqual(account.getOverdrawnCount(), 1)
 
-    # Test withdraw method (too many overdrafts, should deny withdrawal)
+    # Test withdraw method (too many overdrafts, should deny the withdrawal)
     def test_withdraw_too_many_overdrafts(self):
         account = SavingsAccount(50.0)
         account._setOverdrawnCount(3)  # Simulate too many overdrafts
@@ -86,7 +86,7 @@ class TestSavingsAccount(unittest.TestCase):
         account._setOverdrawnCount(1)
         
         overdraft_fee = account.getOverdraft()
-        self.assertEqual(overdraft_fee, 30.00)  # Based on the `_overdraftFee` list
+        self.assertEqual(overdraft_fee, 30.00)  # Based on the _overdraftFee list
 
     def test_calculate_interest(self):
         """Test interest calculation and application to balance."""
