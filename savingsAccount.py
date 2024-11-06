@@ -200,10 +200,9 @@ class SavingsAccount(BankAccount):
                 data = infile.read(length)
                 data = decrypt_AES_CBC(data, key, iv)
                 # process the decrypted data: 
-                print("Decrypted transaction:", data.decode())
+                print("Decrypted transaction:", data)
                 infile.readline()  # Skip the newline
                 length = infile.readline().rstrip().decode()
-
 
     # repr method to print the information of a clients checking account: 
     def __repr__(self):
