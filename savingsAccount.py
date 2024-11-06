@@ -32,24 +32,7 @@ class SavingsAccount(BankAccount):
     # @return: The overdraft fee (floating-point value)
     # Anna
     def getOverdraft(self):
-        return self._overdraftFee[self.getOverdrawnCount - 1]
-
-    # Calculates the interest payment for a savings account, adds a new interest transaction
-    # to the account, and updates the account balance
-    #
-    #  @require balance > 0
-    #
-    #  @return if the interest was added or not    
-    # Hunter 
-    def calcInterest(self):
-        assert(self.getBalance() > 0)
-        interest_amount = self.getBalance() * BankAccount._intRates['savings']
-        transaction = Transaction("interest", interest_amount)
-        # add interest to list of transactions
-        self._accountTransactions.append(transaction)
-        self._writeTransaction(transaction)
-        self.deposit(interest_amount)
-        return True
+        return self._overdraftFee[self.getOverdrawnCount() - 1]
 
     # An accessor/getter method for the number of times the account has been
     # overdrawn
@@ -85,7 +68,7 @@ class SavingsAccount(BankAccount):
         self._writeTransaction(depositTransaction)
         self._balance += amount
         if self.getBalance() >= 100.0 and self.getOverdrawnCount() > 0:
-            self._setOverdrawnCount(self._overdrawnCount() - 1)
+            self._setOverdrawnCount (self._overdrawnCount - 1)
         if self.getBalance() >= 10000.0:
             # if the account balance exceeds 10000 reset overdrawn counter:
             self._setOverdrawnCount(0)
@@ -103,10 +86,10 @@ class SavingsAccount(BankAccount):
     # Boden
     def withdraw(self, amount):
         # Make sure the amount to withdrawal is not negative
-        assert isinstance(amount, float)
-        assert amount >= 0, "Cannot withdraw a negative number"
+        assert(isinstance(amount, float))
+        assert(amount >= 0)
         # Ensure the balance is at least $250 more than the withdrawal amount
-        assert amount < self.getBalance() + 250.0 and self._overdrawnCount < 3, "Transaction denied"
+        assert amount < self.getBalance() + 250.0 and self.getOverdrawnCount() < 3, "Transaction denied"
         # Process the transaction and update necessary variables
         withdrawalTransaction = Transaction("withdrawal", amount)
         # add withdrawal to list of transactions
@@ -140,6 +123,23 @@ class SavingsAccount(BankAccount):
         self._writeTransaction(transaction)
         return True
 
+    # Calculates the interest payment for a savings account, adds a new interest transaction
+    # to the account, and updates the account balance
+    #
+    #  @require balance > 0
+    #
+    #  @return if the interest was added or not    
+    # Hunter 
+    def calcInterest(self):
+        assert(self.getBalance() > 0)
+        interest_amount = self.getBalance() * BankAccount._intRates['savings']
+        transaction = Transaction("interest", interest_amount)
+        # add interest to list of transactions
+        self._accountTransactions.append(transaction)
+        self._writeTransaction(transaction)
+        self.deposit(interest_amount)
+        return True
+    
     # Prints a String representation of all transactions for a Savings Account object      
     # Hunter 
     def printTransactionList(self):
