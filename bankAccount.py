@@ -107,27 +107,25 @@ class BankAccount:
     # Anna
     def printTransactionList(self):
         # If the transaction list is empty
-        if(len(self._accountTransactions) == 0):
-            return("There are no valid transactions to display.")
-        
+        assert len(self._accountTransactions) != 0, "There are no valid transactions to display."
+      
         # If there is at least one transaction in the transaction list to display
-        else:
-            # Creates a String variable to hold the list of transactions
-            transList = ""
-            
-            # Loops through every transaction in the list
-            for transIndex in range(len(self._accountTransactions)):
-               
-                # If the transaction is the last one in the list
-                if(transIndex == (len(self._accountTransactions) - 1)):
-                    # Adds the String representation of the transaction to transList (without a new line)
-                    transList = transList + str(self._accountTransactions[transIndex])
-                   
-                # If the transaction is not the last one in the list
-                else:
-                    # Adds the String representation of the transaction to transList (with a new line)
-                    transList = transList + str(self._accountTransactions[transIndex]) + "\n"
+        # Creates a String variable to hold the list of transactions
+        transList = ""
         
+        # Loops through every transaction in the list
+        for transIndex in range(len(self._accountTransactions)):
+            
+            # If the transaction is the last one in the list
+            if(transIndex == (len(self._accountTransactions) - 1)):
+                # Adds the String representation of the transaction to transList (without a new line)
+                transList = transList + str(self._accountTransactions[transIndex])
+                
+            # If the transaction is not the last one in the list
+            else:
+                # Adds the String representation of the transaction to transList (with a new line)
+                transList = transList + str(self._accountTransactions[transIndex]) + "\n"
+      
         # Returns the full amount of transactions as a String
         return(transList)
    
