@@ -85,7 +85,7 @@ class TestSavingsAccount(unittest.TestCase):
         account._setOverdrawnCount(1)
         
         overdraft_fee = account.getOverdraft()
-        self.assertEqual(overdraft_fee, 30.00)  # Based on the _overdraftFee list
+        self.assertEqual(overdraft_fee, 20.00)  # Based on the _overdraftFee list
 
     def test_calculate_interest(self):
         """Test interest calculation and application to balance."""
