@@ -119,7 +119,7 @@ class TestSavingsAccount(unittest.TestCase):
         # Ensure no errors during the write process
     
     def test_read_transaction(self):
-        account = SavingsAccount(100)
+        account = SavingsAccount(100.0)
 
          # Deposit a valid positive amount
         success = account.deposit(50.0)
