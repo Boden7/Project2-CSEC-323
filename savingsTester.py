@@ -89,7 +89,8 @@ class TestSavingsAccount(unittest.TestCase):
 
     def test_calculate_interest(self):
         account = SavingsAccount(100.0)
-        """Test interest calculation and application to balance."""
+        
+        # Test interest calculation and application to balance:
         print("Testing interest calculation...")
         account.calcInterest()
         expected_balance = 100.0 * (1 + 0.04)  # 4% interest applied
@@ -97,7 +98,8 @@ class TestSavingsAccount(unittest.TestCase):
     
     def test_transaction_listing(self):
         account = SavingsAccount()
-        """Test printing the transaction list."""
+        
+        # Test printing the transaction list:
         print("Testing transaction listing...")
         account.deposit(50.0)
         account.withdraw(20.0)
@@ -112,7 +114,7 @@ class TestSavingsAccount(unittest.TestCase):
         self.assertTrue(success)
         self.assertEqual(account.getBalance(), 150.0)
         
-        """Test writing a transaction to the file with encryption."""
+        # Test writing a transaction to the file with encryption:
         print("Testing transaction write with encryption...")
         transaction = "test transaction"  # Dummy transaction
         account._writeTransaction(transaction)
@@ -126,7 +128,7 @@ class TestSavingsAccount(unittest.TestCase):
         self.assertTrue(success)
         self.assertEqual(account.getBalance(), 150.0)
         
-        """Test reading and decrypting transactions from file."""
+        # Test reading and decrypting transactions from file: 
         print("Testing transaction read with decryption...")
         account._readTransactions()
         # Ensure no errors during the read process
