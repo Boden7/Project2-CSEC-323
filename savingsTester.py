@@ -138,7 +138,7 @@ class TestSavingsAccount(unittest.TestCase):
         
         transaction_list = account._accountTransactions
         self.assertEqual(len(transaction_list), 1)
-        self.assertEqual(transaction_list[0].getType(), "deposit")
+        self.assertEqual(transaction_list[0].getTType(), "deposit")
         self.assertEqual(transaction_list[0].getAmount(), 200.0)
 
     # Test the representation method (__repr__)
