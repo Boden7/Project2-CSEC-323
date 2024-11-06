@@ -7,10 +7,12 @@ A class to represent the data elements and methods required to implement a Clien
 """
 
 # Import statements
-from name import Name
-from address import Address
-from phoneNumber import PhoneNumber
-from bankAccount import BankAccount
+from Name import Name
+from Address import Address
+from PhoneNumber import PhoneNumber
+from BankAccount import BankAccount
+from CheckingAccount import CheckingAccount
+from SavingsAccount import SavingsAccount
 
 # Hunter
 class Client:
@@ -22,9 +24,21 @@ class Client:
    #  @param name: The name of the Client (Name)
    #  @param address: The address of the Client (Address)
    #  @param phoneNumber: The phone number of the Client (PhoneNumber)
+   #  @param accountType: The account type of the first account to be opened for the Client (String)
+   #
+   #  @require name is an instance of the Name class
+   #  @require address is an instance of the Address class
+   #  @require phoneNumber is an instance of the PhoneNumber class
+   #  @require accountType is in the type list supplied
    #
    #  @ensure Client object successfully created   
-   def __init__(self, name: Name, address: Address, phoneNumber: PhoneNumber):
+   def __init__(self, name: Name, address: Address, phoneNumber: PhoneNumber, accountType: str):
+      
+      # Assert statements
+      assert isinstance(name, Name), "The name must be of the Name type."
+      assert isinstance(address, Address), "The address must be of the Address type."
+      assert isinstance(phoneNumber, PhoneNumber), "The phone number must be of the PhoneNumber type."
+      assert accountType in ['checking', 'savings'], "The account type must be either checking or savings."
       
       self._clientNumber = Client.client_counter
       Client.client_counter += 1 # monotonically increase client number with each new instance of a client
@@ -32,30 +46,66 @@ class Client:
       self._name = name 
       self._address = address
       self._phoneNumber = phoneNumber
+      
+      # Initializes the list of bank accounts as empty
       self._bankAccounts = []
+      
+      # Creates an empty (balance = 0) banking account instance of the account type passed in
+      if accountType == 'checking':
+         newCheck = CheckingAccount(0.0)
+         
+         self._bankAccounts.append(newCheck)
+      else:
+         newSave = SavingsAccount(0.0)
+         
+         self._bankAccounts.append(newSave)
 
    # Opens a new client bank account
    #
    #  @param account: The new account to be added to the Client (BankAccount)
    #
-   #  @require BankAccount object not already stored in the client account     
-   def openBankAccount(self, account: BankAccount):
-      assert account not in self._bankAccounts, "Account already exists."
+   #  @require accountType is in the type list supplied  
+   # Anna
+   def openBankAccount(self, accountType, balanceIn = 0.0):
+      assert accountType in ['checking', 'savings'], "The account type must be either checking or savings."
       
-      # Adds the account to the client's list of accounts
+      # Creates either a new checking or savings account
+      if (accountType == 'checking'):
+         account = CheckingAccount(balanceIn)
+      else:
+         account = SavingsAccount(balanceIn)
+      
+      # Adds the new account to the client's list of accounts
       self._bankAccounts.append(account)
 
    # Closes a client's already existing bank account
    #
-   #  @param account: The account to be deleted from the Client (BankAccount)
+   #  @param accountNum: The account number to be deleted from the Client (int)
    #
-   #  @require BankAccount object must already be stored in the client account  
-   # Edited by Anna
-   def closeBankAccount(self, account: BankAccount): #Update in group file
-      assert account in self._bankAccounts, "Account not found."
-      assert account.getBalance() > 0, "Cannot close an account with an outstanding balance"
-      # withdraw all funds and remove the account: 
-      print(f"Withdrawing all funds from account: {account.getAccountNumber()}.")
+   #  @require The list of bank accounts must be greater than 1 to close an account   
+   #  @require BankAccount object associated with the account number must already be stored in the client account
+   # Anna
+   def closeBankAccount(self, accountNum: int): #Update in group file
+      # Length assert statement
+      assert len(self._bankAccounts) > 1, "Cannot delete a client's only account."
+      
+      # Sets a false flag
+      checkNum = False
+      
+      # Loops through the client's account list
+      index = 0
+      while index < len(self._bankAccounts):
+         # If the account number is in the list
+         if self._bankAccounts[index].getAccountNumber() == accountNum:
+            checkNum = True
+            account = self._bankAccounts[index]
+         index = index + 1
+      
+      # Assert statement
+      assert checkNum == True, "Account not found."
+      
+      # Withdraw all funds and remove the account: 
+      print(f"Withdrawing all funds from account: {accountNum}.")
       
       # Determines how much money is currently being stored within the account
       accountBal = account.getBalance()
@@ -63,7 +113,7 @@ class Client:
       # Withdraws the full account balance from the account
       account.withdraw(accountBal)
       
-      print(f"Account {account.getAccountNumber()} closed.")
+      print(f"Account {accountNum} closed.")
       
       # Removes the account from the list and dereferences it
       self._bankAccounts.remove(account)
@@ -86,6 +136,66 @@ class Client:
    #  @return: The next available client number (int)  
    def getNextClientNumber(self):
       return Client.client_counter
+   
+   # Accessor/getter method for the first name of the client
+   #
+   #  @return: The first name of the client (String)   
+   def getFirstName(self):
+      return self._name.getFirst()
+   
+   # Accessor/getter method for the last name of the client
+   #
+   #  @return: The last name of the client (String)   
+   def getLastName(self):
+      return self._name.getLast()
+   
+   # Accessor/getter method for the street of the client
+   #
+   #  @return: The street of the client (String)   
+   def getStreet(self):
+      return self._address.getStreet()
+   
+   # Returns the city of the client
+   #
+   #  @return: The city of the client (String)   
+   def getCity(self):
+      return self._address.getCity()
+   
+   # Accessor/getter method for the state of the client
+   #
+   #  @return: The state of the client (String)   
+   def getState(self):
+      return self._address.getState()   
+   
+   # Accessor/getter method for the phone number of the client
+   #
+   #  @return: The phone number of the client (String)   
+   def getPhoneNumber(self):
+      return self._phoneNumber.getPhoneNumber()
+   
+   # Mutator/setter method for the first name of the client  
+   def setFirstName(self, firstIn):
+      self._name.setFirst(firstIn)
+      
+   # Mutator/setter method for the last name of the client  
+   def setLastName(self, lastIn):
+      self._name.setLast(lastIn)
+   
+   # Mutator/setter method for the street of the client  
+   def setStreet(self, streetIn):
+      self._address.setStreet(streetIn)
+      
+   # Mutator/setter method for the city of the client  
+   def setCity(self, cityIn):
+      self._address.setCity(cityIn)
+   
+   # Mutator/setter method for the state of the client  
+   def setState(self, stateIn):
+      self._address.setState(stateIn)
+   
+   # Mutator/setter method for the phone number of the client  
+   def setPhoneNumber(self, numberIn):
+      self._phoneNumber.setPhoneNumber(numberIn)   
    
    # Repr method for string representation of a particular client
    #
