@@ -183,7 +183,7 @@ class SavingsAccount(BankAccount):
     # Method to read all transactions made on a checking account to the checking.txt
     # file, data is decrypted first
     # Hunter
-    def readTransactions(self):
+    def _readTransactions(self):
         # Set the Debug Flag
         DEBUG = False
         key = b'MySuperSecretKey1222222222222222'
