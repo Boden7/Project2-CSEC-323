@@ -56,17 +56,14 @@ class CheckingAccount(BankAccount):
     def withdraw(self, amount):
         assert(isinstance(amount, float))
         assert(amount > 0)
-        if self._balance >= amount:
-            # Process the transaction and update necessary variables
-            withdrawalTransaction = Transaction("withdrawal", amount)
-            # add withdrawal to list of transactions
-            self._accountTransactions.append(withdrawalTransaction)
-            self._writeTransaction(withdrawalTransaction)
-            self._balance -= amount
-            return True
-        else:
-            print("Withdrawal denied: insufficient funds.")
-            return False
+        assert self._balance >= amount, "Withdrawal denied: insufficient funds."
+        # Process the transaction and update necessary variables
+        withdrawalTransaction = Transaction("withdrawal", amount)
+        # add withdrawal to list of transactions
+        self._accountTransactions.append(withdrawalTransaction)
+        self._writeTransaction(withdrawalTransaction)
+        self._balance -= amount
+        return True
 
     # Transfer an amount of money from one account to another
     #
@@ -76,14 +73,13 @@ class CheckingAccount(BankAccount):
     #  @return: True if the money was able to be transferred and False if not
     # Boden
     def transfer(self, amount, otherAccount):
-        if self.withdraw(amount):
-            otherAccount.deposit(amount)
-            transaction = Transaction("transfer", amount)
-            # add transfer to list of transactions
-            self._accountTransactions.append(transaction)
-            self._writeTransaction(transaction)
-            return True
-        return False
+        assert self.withdraw(amount)
+        otherAccount.deposit(amount)
+        transaction = Transaction("transfer", amount)
+        # add transfer to list of transactions
+        self._accountTransactions.append(transaction)
+        self._writeTransaction(transaction)
+        return True
 
     # Calculates the interest payment for a checking account, adds a new interest transaction
     # to the account, and updates the account balance
