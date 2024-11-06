@@ -22,6 +22,12 @@ Required libraries: unittest, os, cryptography (for encryption/decryption of tra
 (pip install cryptography)
 
 ------------------------------ USAGE --------------------------
+Downloading the project:
+Files needed: AES_CBC.py, address.py, bankAccount.py, checkingAccount.py, client.py, name.py, phoneNumber.py, savingsAccount.py, transaction.py
+Download the files from the project's repository: https://github.com/Boden7/Project2-CSEC-323
+
+Files needed for testing: AddressTester.py, NameTester.py, PhoneNumberTester.py, bankAccountTester.py, checkingTester.py, clientTester.py, savingsTester.py, transactionTester.py
+
 Creating and Managing Clients:
 To create a new client and assign them a bank account, you can follow this example:
 
