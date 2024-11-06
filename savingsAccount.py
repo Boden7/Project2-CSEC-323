@@ -47,7 +47,7 @@ class SavingsAccount(BankAccount):
         transaction = Transaction("interest", interest_amount)
         # add interest to list of transactions
         self._accountTransactions.append(transaction)
-        self.writeTransaction(transaction)
+        self._writeTransaction(transaction)
         self.deposit(interest_amount)
         return True
 
