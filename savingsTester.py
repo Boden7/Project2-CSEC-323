@@ -91,7 +91,7 @@ class TestSavingsAccount(unittest.TestCase):
         account = SavingsAccount(100.0)
         """Test interest calculation and application to balance."""
         print("Testing interest calculation...")
-        self.account.calcInterest()
+        account.calcInterest()
         expected_balance = 100.0 * (1 + 0.04)  # 4% interest applied
         self.assertAlmostEqual(self.account.getBalance(), expected_balance, places = 2)
     
@@ -99,8 +99,8 @@ class TestSavingsAccount(unittest.TestCase):
         account = SavingsAccount()
         """Test printing the transaction list."""
         print("Testing transaction listing...")
-        self.account.deposit(50.0)
-        self.account.withdraw(20.0)
+        account.deposit(50.0)
+        account.withdraw(20.0)
         transactions = self.account.printTransactionList()
         self.assertNotEqual(transactions, "There are no valid transactions to display.")
     
@@ -115,7 +115,7 @@ class TestSavingsAccount(unittest.TestCase):
         """Test writing a transaction to the file with encryption."""
         print("Testing transaction write with encryption...")
         transaction = "test transaction"  # Dummy transaction
-        self.account._writeTransaction(transaction)
+        account._writeTransaction(transaction)
         # Ensure no errors during the write process
     
     def test_read_transaction(self):
@@ -128,7 +128,7 @@ class TestSavingsAccount(unittest.TestCase):
         
         """Test reading and decrypting transactions from file."""
         print("Testing transaction read with decryption...")
-        self.account._readTransactions()
+        account._readTransactions()
         # Ensure no errors during the read process
 
     # Test transaction logging in the list with transaction
