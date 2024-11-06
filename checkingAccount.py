@@ -44,8 +44,6 @@ class CheckingAccount(BankAccount):
         return True
 
     # Withdraws money from the account if the transaction is valid and records the transaction
-    # If the transaction is valid but the account will be overdrawn, applies an overdraft fee and 
-    # updates the counter for overdrawn
     #
     #  @param amount: the amount to be withdrawn
     #
