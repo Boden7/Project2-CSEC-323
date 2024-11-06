@@ -32,8 +32,8 @@ class TestCheckingAccount(unittest.TestCase):
     def test_withdraw_exceeding_balance(self):
         """Test withdrawing an amount that exceeds the balance."""
         print("Testing withdrawal exceeding balance...")
-        success = self.account.withdraw(150.0)  # Should fail
-        self.assertFalse(success)
+        with self.assertRaises(AssertionError):
+            self.account.withdraw(150)
         self.assertEqual(self.account.getBalance(), 100.0)  # Balance should remain unchanged
     
     def test_transfer(self):
