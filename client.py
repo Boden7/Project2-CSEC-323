@@ -50,16 +50,14 @@ class Client:
    #  @param account: The account to be deleted from the Client (BankAccount)
    #
    #  @require BankAccount object must already be stored in the client account    
-   def closeBankAccount(self, account):
+   # close a bank account:
+   def closeBankAccount(self, account: BankAccount): #Update in group file
       assert account in self._bankAccounts, "Account not found."
-      
-      # Withdraws all funds and remove the account
-      print(f"Withdrawing all funds from account: {account}.")
-      print(f"Account {account} closed.")
-      
-      # **MUST ADD WITHDRAW ALL FUNDS FROM ACCOUNT
-      
-      # Removes the account from the list and dereferences it
+      # withdraw all funds and remove the account: 
+      print(f"Withdrawing all funds from account: {account.getAccountNumber()}.")
+      account._balance = 0
+      print(f"Account {account.getAccountNumber()} closed.")
+      # remove the account from the list and dereference it
       self._bankAccounts.remove(account)
       account = None
 
