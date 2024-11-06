@@ -116,11 +116,11 @@ class SavingsAccount(BankAccount):
         # overdraft fee and increment the overdrawn counter
         if self.getBalance() < 0.0:
             # Process the transaction and update necessary variables
+            self._setOverdrawnCount(self.getOverdrawnCount() + 1)
             self._balance -= self.getOverdraft()
             penaltyTransaction = Transaction("penalty", self.getOverdraft())
             # add penalty to list of transactions
             self._accountTransactions.append(penaltyTransaction)
-            self._setOverdrawnCount(self.getOverdrawnCount() + 1)
             print("The account is overdrawn")
         return True
 
