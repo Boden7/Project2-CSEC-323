@@ -7,12 +7,12 @@ A class to represent the data elements and methods required to implement a Clien
 """
 
 # Import statements
-from Name import Name
-from Address import Address
-from PhoneNumber import PhoneNumber
-from BankAccount import BankAccount
-from CheckingAccount import CheckingAccount
-from SavingsAccount import SavingsAccount
+from name import Name
+from address import Address
+from phoneNumber import PhoneNumber
+from bankAccount import BankAccount
+from checkingAccount import CheckingAccount
+from savingsAccount import SavingsAccount
 
 # Hunter
 class Client:
