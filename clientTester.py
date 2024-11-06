@@ -14,23 +14,47 @@ from client import Client
 from name import Name
 from address import Address
 from phoneNumber import PhoneNumber
+from checkingAccount import CheckingAccount
+from savingsAccount import SavingsAccount
+from bankAccount import BankAccount
 
 class TestClient(unittest.TestCase):
     # The setup method initializes a client to be used for
     # testing purposes
     # Anna
     def setUp(self):
-        # Resets the client counter for each test
+        # Resets the client and bank account counter for each test
         Client.client_counter = 100
+        BankAccount._nextAccountVal = 1000
         
         # Initializes a valid name, address, and phone number for the client tester
-        validName = Name("First", "Last")
-        validAddress = Address("100 Street", "City", "VA")
-        validPhone = PhoneNumber("8041234567")
+        self.validName = Name("First", "Last")
+        self.validAddress = Address("100 Street", "City", "VA")
+        self.validPhone = PhoneNumber("8041234567")
         
         # Initializes two valid clients
-        self.client1 = Client(validName, validAddress, validPhone)
-        self.client2 = Client(validName, validAddress, validPhone)
+        self.client1 = Client(self.validName, self.validAddress, self.validPhone, "checking")
+        self.client2 = Client(self.validName, self.validAddress, self.validPhone, "savings")
+        
+    def test_ConstructorInvalidName(self):
+        print("\nTesting to ensure the constructor properly throws an assertion with incorrect name type")
+        
+        self.assertRaises(AssertionError, Client, "First Last", self.validAddress, self.validPhone, 'checking')
+    
+    def test_ConstructorInvalidAddress(self):
+        print("\nTesting to ensure the constructor properly throws an assertion with incorrect address type")
+        
+        self.assertRaises(AssertionError, Client, self.validName, "100 Street, City, VA", self.validPhone, 'checking')
+    
+    def test_ConstructorInvalidPhoneNumber(self):
+        print("\nTesting to ensure the constructor properly throws an assertion with incorrect phone number type")
+        
+        self.assertRaises(AssertionError, Client, self.validName, self.validAddress, "8041234567", 'checking')
+    
+    def test_ConstructorInvalidAccountType(self):
+        print("\nTesting to ensure the constructor properly throws an assertion with incorrect account type")
+        
+        self.assertRaises(AssertionError, Client, self.validName, self.validAddress, self.validPhone, 'neither')    
     
     def test_ConstructorSetFirstName(self):
         print("\nTesting to ensure the constructor can properly set the first name") 
@@ -104,28 +128,28 @@ class TestClient(unittest.TestCase):
         print("\nTesting to ensure the constructor can properly get the next available client number") 
         
         checkClientNum = self.client1.getNextClientNumber()
+        checkClient2Num = self.client2.getNextClientNumber()
         
-        # Ensures the Client object can properly pull out the next available client number   
-        self.assertEqual(checkClientNum, 101)
-    
-    def test_ConstructorGetClientAccountsEmpty(self):
-        print("\nTesting to ensure the constructor can properly get the list of accounts when the list is empty") 
-        
-        checkClientAccounts = self.client1.getClientAccounts()
-        
-        # Ensures the Client object can properly pull out the next available client number   
-        self.assertEqual(checkClientAccounts, [])
+        # Ensures the Client objects can properly pull out the next available client number
+        self.assertEqual(checkClientNum, 102)
+        self.assertEqual(checkClient2Num, 102)
     
     def test_ConstructorGetClientAccounts(self):
-        print("\nTesting to ensure the constructor can properly get the list of accounts when the list is non-empty") 
+        print("\nTesting to ensure the constructor can properly get the list of accounts") 
         
-        # ** ADD TRANSACTION HERE
-        
+        # Receives the client accounts
         checkClientAccounts = self.client1.getClientAccounts()
         
-        # Ensures the Client object can properly pull out the next available client number 
+        # Initializes the exact values of the bank account stored in client1
+        checkTest = CheckingAccount(0.0)
+        checkTest._accountNum = 1000
+        
+        # Creates the expected account list
+        expected = [checkTest]
+        
+        # Ensures the client account list matches the expected list 
         # ** ADD PROPER CHECK HERE
-        self.assertEqual(checkClientAccounts, [])
+        self.assertEqual(checkClientAccounts, expected)
     
     def test_ConstructorReprEmpty(self):
         print("\nTesting to ensure the constructor can properly list the info of an empty client") 
@@ -133,16 +157,24 @@ class TestClient(unittest.TestCase):
         checkRepr = str(self.client1)
         
         # ** FIX COMPARISON
-        compareStr = "- Client Number: 100\n- Name: First Last\n- Phone Number: +1(804)123-4567\n- Address: 100 Street, City, VA\n- Bank Accounts:\n"
+        compareStr = (f"Client Number: 100\n"
+                      f"Name: First Last\n"
+                                f"Phone Number: +1(804)123-4567\n"
+                                f"Address: 100 Street, City, VA\n"
+                                f"Bank Accounts:\n"
+                                f"Account Number: 1000\n"
+                                f"Balance: 0.00\n"
+                                f"Account Type: 'checking'\n"
+                                f"Transactions:\n"
+                                f"There are no valid transactions to display."
+                                )
         
         # Ensures the Client object can properly represent the client as a string
         self.assertEqual(checkRepr, compareStr)
     
     def test_ConstructorRepr(self):
         print("\nTesting to ensure the constructor can properly list the info of a client with at least one bank account") 
-        
-        # ** ADD TRANSACTION
-        
+                
         checkRepr = str(self.client1)
         
         # ** FIX COMPARISON
@@ -163,13 +195,107 @@ class TestClient(unittest.TestCase):
         # Ensures the Client object can properly determine inequality   
         self.assertNotEqual(self.client1, self.client2)
     
-    def test_openBankAccount(self):
-        # ** TO BE IMPLEMENTED
-        pass
+    def test_openBankAccountInvalidAccountType(self):
+        print("\nTesting to ensure that openBankAccount() throws an assertion when the account type is an invalid type") 
+        
+        self.assertRaises(AssertionError, self.client1.openBankAccount, 100.0, "neither")  
     
-    def test_closeBankAccount(self):
-        # ** TO BE IMPLEMENTED
-        pass    
+    def test_openBankAccountValidChecking(self):
+        print("\nTesting to ensure that openBankAccount() works as intended with a checking account") 
+        
+        # Attempts to add a new bank account
+        self.client1.openBankAccount('checking', 100.0)
+        
+        # Pulls the bank accounts to compare
+        checkList = self.client1.getClientAccounts()
+        
+        # Creates the exact same bank accounts
+        checkTest = CheckingAccount(0.0)
+        checkTest._accountNum = 1000
+        checkTest2 = CheckingAccount(100.0)
+        checkTest2._accountNum = 1002
+        
+        # The expected list
+        expectedList = [checkTest, checkTest2]
+        
+        # Compares the list of bank accounts of the client with the expected list
+        self.assertEqual(checkList, expectedList)
+    
+    def test_openBankAccountValidSavings(self):
+        print("\nTesting to ensure that openBankAccount() works as intended with a savings account") 
+        
+        # Attempts to add a new bank account
+        self.client1.openBankAccount('savings', 100.0)
+        
+        # Pulls the bank accounts to compare
+        checkList = self.client1.getClientAccounts()
+        
+        # Creates the exact same bank accounts
+        checkTest = CheckingAccount(0.0)
+        checkTest._accountNum = 1000
+        checkTest2 = SavingsAccount(100.0)
+        checkTest2._accountNum = 1002
+        
+        # The expected list
+        expectedList = [checkTest, checkTest2]
+        
+        # Compares the list of bank accounts of the client with the expected list
+        self.assertEqual(checkList, expectedList)    
+    
+    def test_openBankAccountValidEmptyBal(self):
+        print("\nTesting to ensure that openBankAccount() works as intended when no balance is passed in") 
+        
+        # Attempts to add a new bank account
+        self.client1.openBankAccount('checking')
+        
+        # Pulls the bank accounts to compare
+        checkList = self.client1.getClientAccounts()
+        
+        # Creates the exact same bank accounts
+        checkTest = CheckingAccount(0.0)
+        checkTest._accountNum = 1000
+        checkTest2 = CheckingAccount(0.0)
+        checkTest2._accountNum = 1002
+        
+        # The expected list
+        expectedList = [checkTest, checkTest2]
+        
+        # Compares the list of bank accounts of the client with the expected list
+        self.assertEqual(checkList, expectedList)    
+    
+    def test_closeBankAccountValid(self):
+        print("\nTesting to ensure that closeBankAccount() works as intended")
+        
+        # Adds a new bank account to delete
+        self.client1.openBankAccount('checking', 100.0)        
+        
+        # Attempts to close the new bank account
+        self.client1.closeBankAccount(1002)
+        
+        # Pulls out the client account list
+        clientList = self.client1.getClientAccounts()
+        
+        # Creates the exact same bank accounts
+        checkTest = CheckingAccount(0.0)
+        checkTest._accountNum = 1000  
+        
+        # The expected list
+        expectedList = [checkTest]        
+        
+        # Checks to ensure the bank account does not exist in the client account list anymore
+        self.assertEquals(clientList, expectedList)    
+    
+    def test_closeBankAccountInvalidAccountNumber(self):
+        print("\nTesting to ensure that closeBankAccount() throws an assertion error when an invalid account number is passed in")
+        
+        # Attempts to close a nonexistent bank account
+        self.assertRaises(AssertionError, self.client1.closeBankAccount, 1005)    
+
+    def test_closeBankAccountOneAccount(self):
+        print("\nTesting to ensure that closeBankAccount() does not allow the closing of an account if the client only has one account") 
+        
+        # Attempts to close a bank account when there is only one account
+        self.assertRaises(AssertionError, self.client1.closeBankAccount, 1000)         
 
 if __name__ == '__main__':
     unittest.main()
