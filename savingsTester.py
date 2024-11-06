@@ -48,7 +48,7 @@ class TestSavingsAccount(unittest.TestCase):
         # Withdraw an amount greater than balance
         success = account.withdraw(100.0)
         self.assertTrue(success)
-        self.assertEqual(account.getBalance(), 50.0 - account.getOverdraft())
+        self.assertEqual(account.getBalance(), -50.0 - account.getOverdraft())
         
         # Ensure that the overdraft count is incremented
         self.assertEqual(account.getOverdrawnCount(), 1)
