@@ -42,7 +42,6 @@ class BankAccount:
         BankAccount._nextAccountVal += 1
         self._accountTransactions = []  # Container to store all transactions on an account
         self._balance = balanceIn
-        self._overdrawnCount = 0  # Counter for overdrafts (savings only)
         self._accountType = account_type
 
     @abstractmethod
