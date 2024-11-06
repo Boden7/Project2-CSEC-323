@@ -112,7 +112,7 @@ class TestSavingsAccount(unittest.TestCase):
     def test_read_transaction(self):
         """Test reading and decrypting transactions from file."""
         print("Testing transaction read with decryption...")
-        self.account.readTransactions()
+        self.account._readTransactions()
         # Ensure no errors during the read process
 
     # Test transaction logging in the list with transaction
