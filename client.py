@@ -53,6 +53,7 @@ class Client:
    # Edited by Anna
    def closeBankAccount(self, account: BankAccount): #Update in group file
       assert account in self._bankAccounts, "Account not found."
+      assert account.getBalance() > 0, "Cannot close an account with an outstanding balance"
       # withdraw all funds and remove the account: 
       print(f"Withdrawing all funds from account: {account.getAccountNumber()}.")
       
