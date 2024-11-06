@@ -39,7 +39,7 @@ from savingsAccount import SavingsAccount
 client1 = Client(name = "FirstName LastName", phone = "1234567890", street = "123 Main St", city = "City", state = "VA")
 
 # Display client information
-client1.display_client_details()
+client1.__repr__()
 
 # Open a checking account
 checking_account = CheckingAccount(balanceIn = 500.0)
@@ -48,17 +48,17 @@ checking_account = CheckingAccount(balanceIn = 500.0)
 savings_account = SavingsAccount(balanceIn = 1000.0)
 
 # Add accounts to the client
-client1.open_account(checking_account)
-client1.open_account(savings_account)
+client1.openBankAccount(checking_account)
+client1.openBankAccount(savings_account)
 
 # Display accounts and transactions
-client1.display_client_details()
+client1.printTransactionList()
 
 # Close an account by withdrawing all funds
-client1.close_account(checking_account)
+client1.closeBankAccount(checking_account)
 
 ---------------------------- Client Class Details -----------------------------
-The Client class includes:
+* The Client class includes:
 
 Attributes: 
 name (first and last names, validated for length and format)
@@ -96,6 +96,7 @@ Interest Calculation: 4.0% interest rate.
 Overdraft Handling: Allows a maximum of three overdrafts, with different fees for each occurrence.
 Transaction Limits: Similar to checking accounts, but with additional restrictions on withdrawals after overdraft incidents.
 File Storage: Transaction details are saved in the file savings.txt with encrypted data.
+
 Validation
 The system performs several validations to ensure correct data entry:
 
