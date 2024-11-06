@@ -32,14 +32,14 @@ class Name:
     #
     # @return: The first name associated with the Bank Account (String)
     # Anna
-    def getFirst(self):
+    def getFirstName(self):
         return self._firstName
    
     # An accessor/getter method for the last name
     #
     # @return: The last name associated with the Bank Account (String)
     # Anna
-    def getLast(self):
+    def getLastName(self):
         return self._lastName
 
     # A mutator/setter method for the last name
@@ -48,7 +48,7 @@ class Name:
     #
     #  @require: last is a String type between 1 and 40 characters inclusive that does not contain any special characters  
     # Anna
-    def setLast(self, last):
+    def setLastName(self, last):
         # Assert statements for preconditions
         assert isinstance(last, str), "The last name must be of a String type."
         assert last.isalpha(), "The last name must not contain any special characters."
@@ -62,7 +62,7 @@ class Name:
     #
     #  @require: first is a String type between 1 and 25 characters inclusive that does not contain any special characters
     # Anna
-    def setFirst(self, first):
+    def setFirstName(self, first):
         # Assert statements for preconditions
         assert isinstance(first, str), "The first name must be of a String type."
         assert first.isalpha(), "The first name must not contain any special characters."
