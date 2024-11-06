@@ -104,7 +104,7 @@ class TestName(unittest.TestCase):
         
         # Ensures the Name object with false call to changing first name
         # throws an assertion error        
-        self.assertRaises(AssertionError, self.validName.setFirst, self.invalidType)    
+        self.assertRaises(AssertionError, self.validName.setFirstName, self.invalidType)    
     
     # Anna
     def test_setFirstInvalidFirstNameBlank(self):
@@ -112,7 +112,7 @@ class TestName(unittest.TestCase):
         
         # Ensures the Name object with false call to changing first name
         # throws an assertion error        
-        self.assertRaises(AssertionError, self.validName.setFirst, self.invalidEmpty)
+        self.assertRaises(AssertionError, self.validName.setFirstName, self.invalidEmpty)
 
     # Anna
     def test_setFirstInvalidFirstNameSpecialChar(self):
@@ -120,7 +120,7 @@ class TestName(unittest.TestCase):
         
         # Ensures the Name object with false call to changing first name
         # throws an assertion error        
-        self.assertRaises(AssertionError, self.validName.setFirst, self.invalidChars)        
+        self.assertRaises(AssertionError, self.validName.setFirstName, self.invalidChars)        
 
     # Anna
     def test_setFirstInvalidFirstNameNameLength(self):
@@ -128,7 +128,7 @@ class TestName(unittest.TestCase):
         
         # Ensures the Name object with false call to changing first name
         # throws an assertion error        
-        self.assertRaises(AssertionError, self.validName.setFirst, self.invalidFirstLength)
+        self.assertRaises(AssertionError, self.validName.setFirstName, self.invalidFirstLength)
     
     # Anna
     def test_setLastInvalidLastNameType(self):
@@ -136,7 +136,7 @@ class TestName(unittest.TestCase):
         
         # Ensures the Name object with false call to changing last name
         # throws an assertion error        
-        self.assertRaises(AssertionError, self.validName.setLast, self.invalidType)    
+        self.assertRaises(AssertionError, self.validName.setLastName, self.invalidType)    
     
     # Anna
     def test_setLastInvalidLastNameBlank(self):
@@ -144,7 +144,7 @@ class TestName(unittest.TestCase):
         
         # Ensures the Name object with false call to changing last name
         # throws an assertion error        
-        self.assertRaises(AssertionError, self.validName.setLast, self.invalidEmpty)
+        self.assertRaises(AssertionError, self.validName.setLastName, self.invalidEmpty)
 
     # Anna
     def test_setLastInvalidLastNameSpecialChar(self):
@@ -152,7 +152,7 @@ class TestName(unittest.TestCase):
         
         # Ensures the Name object with false call to changing last name
         # throws an assertion error        
-        self.assertRaises(AssertionError, self.validName.setLast, self.invalidChars)         
+        self.assertRaises(AssertionError, self.validName.setLastName, self.invalidChars)         
 
     # Anna
     def test_setLastInvalidLastNameLength(self):
@@ -160,7 +160,7 @@ class TestName(unittest.TestCase):
         
         # Ensures the Name object with false call to changing last name
         # throws an assertion error        
-        self.assertRaises(AssertionError, self.validName.setLast, self.invalidLastLength)    
+        self.assertRaises(AssertionError, self.validName.setLastName, self.invalidLastLength)    
 
 if __name__ == '__main__':
     unittest.main()
