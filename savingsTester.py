@@ -88,6 +88,7 @@ class TestSavingsAccount(unittest.TestCase):
         self.assertEqual(overdraft_fee, 20.00)  # Based on the _overdraftFee list
 
     def test_calculate_interest(self):
+        account = SavingsAccount(100.0)
         """Test interest calculation and application to balance."""
         print("Testing interest calculation...")
         self.account.calcInterest()
@@ -95,6 +96,7 @@ class TestSavingsAccount(unittest.TestCase):
         self.assertAlmostEqual(self.account.getBalance(), expected_balance, places = 2)
     
     def test_transaction_listing(self):
+        account = SavingsAccount()
         """Test printing the transaction list."""
         print("Testing transaction listing...")
         self.account.deposit(50.0)
@@ -103,6 +105,13 @@ class TestSavingsAccount(unittest.TestCase):
         self.assertNotEqual(transactions, "There are no valid transactions to display.")
     
     def test_write_transaction(self):
+        account = SavingsAccount(100.0)
+
+         # Deposit a valid positive amount
+        success = account.deposit(50.0)
+        self.assertTrue(success)
+        self.assertEqual(account.getBalance(), 150.0)
+        
         """Test writing a transaction to the file with encryption."""
         print("Testing transaction write with encryption...")
         transaction = "test transaction"  # Dummy transaction
@@ -110,6 +119,13 @@ class TestSavingsAccount(unittest.TestCase):
         # Ensure no errors during the write process
     
     def test_read_transaction(self):
+        account = SavingsAccount(100)
+
+         # Deposit a valid positive amount
+        success = account.deposit(50.0)
+        self.assertTrue(success)
+        self.assertEqual(account.getBalance(), 150.0)
+        
         """Test reading and decrypting transactions from file."""
         print("Testing transaction read with decryption...")
         self.account._readTransactions()
