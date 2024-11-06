@@ -49,4 +49,4 @@ class PhoneNumber:
     #
     # @return: A String representation of the PhoneNumber object (String)     
     def __repr__(self):
-        return f"+1({self._phoneNum[0:2]}){self._phoneNum[3:5]}-{self._phoneNum[6:9]}"
+        return f"+1({self._phoneNum[0:3]}){self._phoneNum[3:6]}-{self._phoneNum[6:]}"
