@@ -84,7 +84,7 @@ class SavingsAccount(BankAccount):
         self._accountTransactions.append(depositTransaction)
         self._writeTransaction(depositTransaction)
         self._balance += amount
-        if self.getBalance() >= 100.0:
+        if self.getBalance() >= 100.0 and self.getOverdrawnCount() > 0:
             self._setOverdrawnCount (self._overdrawnCount() - 1)
         if self.getBalance() >= 10000.0:
             # if the account balance exceeds 10000 reset overdrawn counter:
