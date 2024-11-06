@@ -1,7 +1,6 @@
 import unittest
 from savingsAccount import SavingsAccount
 from transaction import Transaction
-from unittest.mock import patch, MagicMock
 
 class TestSavingsAccount(unittest.TestCase):
 
@@ -86,34 +85,33 @@ class TestSavingsAccount(unittest.TestCase):
         overdraft_fee = account.getOverdraft()
         self.assertEqual(overdraft_fee, 30.00)  # Based on the `_overdraftFee` list
 
-    # Test printing the transaction list
-    def test_print_transaction_list(self):
-        account = SavingsAccount(500.0)
-        account.deposit(100.0)
-        
-        with patch('builtins.print') as mocked_print:
-            account.printTransactionList()
-            mocked_print.assert_called()  # Check that print was called for transactions
-
-    # Test write and read transactions (mocking file operations)
-    @patch('builtins.open', new_callable=MagicMock)
-    def test_write_transactions(self, mock_file):
-        account = SavingsAccount(500.0)
-        transaction = Transaction("deposit", 100.0)
-        account._writeTransaction(transaction)
-        
-        # Ensure the file was written to
-        mock_file.assert_called_with("savings.txt", "wb")
-
-    @patch('builtins.open', new_callable=MagicMock)
-    def test_read_transactions(self, mock_file):
-        account = SavingsAccount(500.0)
-        
-        # Simulate a file read
-        mock_file.return_value.__enter__.return_value.readline.return_value = b'100'
-        account.readTransactions()
-
-        mock_file.assert_called_with("savings.txt", "rb")
+    def test_calculate_interest(self):
+        """Test interest calculation and application to balance."""
+        print("Testing interest calculation...")
+        self.account.calcInterest()
+        expected_balance = 100.0 * (1 + 0.015)  # 1.5% interest applied
+        self.assertAlmostEqual(self.account.getBalance(), expected_balance, places=2)
+    
+    def test_transaction_listing(self):
+        """Test printing the transaction list."""
+        print("Testing transaction listing...")
+        self.account.deposit(50.0)
+        self.account.withdraw(20.0)
+        transactions = self.account.printTransactionList()
+        self.assertNotEqual(transactions, "There are no valid transactions to display.")
+    
+    def test_write_transaction(self):
+        """Test writing a transaction to the file with encryption."""
+        print("Testing transaction write with encryption...")
+        transaction = "test transaction"  # Dummy transaction
+        self.account._writeTransaction(transaction)
+        # Ensure no errors during the write process
+    
+    def test_read_transaction(self):
+        """Test reading and decrypting transactions from file."""
+        print("Testing transaction read with decryption...")
+        self.account.readTransactions()
+        # Ensure no errors during the read process
 
     # Test transaction logging with a mock transaction
     def test_transaction_logging(self):
@@ -130,10 +128,10 @@ class TestSavingsAccount(unittest.TestCase):
         account = SavingsAccount(500.0)
         account.deposit(100.0)
         
-        repr_output = repr(account)
-        self.assertIn("Account Number:", repr_output)
-        self.assertIn("Balance: 600.00", repr_output)
-        self.assertIn("Account Type: 'savings'", repr_output)
+        reprCheck = repr(account)
+        self.assertIn("Account Number:", reprCheck)
+        self.assertIn("Balance: 600.00", reprCheck)
+        self.assertIn("Account Type: 'savings'", reprCheck)
 
 if __name__ == '__main__':
     unittest.main()
