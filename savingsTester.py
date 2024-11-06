@@ -3,7 +3,6 @@
 
 import unittest
 from savingsAccount import SavingsAccount
-from transaction import Transaction
 
 class TestSavingsAccount(unittest.TestCase):
 
