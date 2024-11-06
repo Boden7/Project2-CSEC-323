@@ -49,15 +49,22 @@ class Client:
    #
    #  @param account: The account to be deleted from the Client (BankAccount)
    #
-   #  @require BankAccount object must already be stored in the client account    
-   # close a bank account:
+   #  @require BankAccount object must already be stored in the client account  
+   # Edited by Anna
    def closeBankAccount(self, account: BankAccount): #Update in group file
       assert account in self._bankAccounts, "Account not found."
       # withdraw all funds and remove the account: 
       print(f"Withdrawing all funds from account: {account.getAccountNumber()}.")
-      account._balance = 0
+      
+      # Determines how much money is currently being stored within the account
+      accountBal = account.getBalance()
+      
+      # Withdraws the full account balance from the account
+      account.withdraw(accountBal)
+      
       print(f"Account {account.getAccountNumber()} closed.")
-      # remove the account from the list and dereference it
+      
+      # Removes the account from the list and dereferences it
       self._bankAccounts.remove(account)
       account = None
 
@@ -81,7 +88,7 @@ class Client:
    
    # Repr method for string representation of a particular client
    #
-   # @return: A String representation of the Client object (String)   
+   #  @return: A String representation of the Client object (String)   
    def __repr__(self): 
       details = (
       f"Client Number: {self._clientNumber}\n"
@@ -105,7 +112,6 @@ class Client:
    def __eq__(self, other):
       # Check if other is an instance of Client
       assert(isinstance(other, Client)), "Comparison must be between two Client instances."
-      # Compare variables
-      return (self._name == other._name and
-                    self._address == other._address and
-                    self._phoneNumber == other._phoneNumber)
+      
+      # Compare immutable variables
+      return (self._clientNumber == other._clientNumber)
