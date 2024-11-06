@@ -95,27 +95,23 @@ class SavingsAccount(BankAccount):
         assert(isinstance(amount, float))
         assert(amount <= 0)
         # Ensure the balance is at least $250 more than the withdrawal amount
-        if amount < self.getBalance() + 250.0 and self._overdrawnCount < 3:
+        assert amount < self.getBalance() + 250.0 and self._overdrawnCount < 3, "Transaction denied"
+        # Process the transaction and update necessary variables
+        withdrawalTransaction = Transaction("withdrawal", amount)
+        # add withdrawal to list of transactions
+        self._accountTransactions.append(withdrawalTransaction)
+        self._balance -= amount
+        # If the withdrawal would put the balance in the negative, add an
+        # overdraft fee and increment the overdrawn counter
+        if self.getBalance() < 0.0:
             # Process the transaction and update necessary variables
-            withdrawalTransaction = Transaction("withdrawal", amount)
-            # add withdrawal to list of transactions
-            self._accountTransactions.append(withdrawalTransaction)
-            self._balance -= amount
-            # If the withdrawal would put the balance in the negative, add an
-            # overdraft fee and increment the overdrawn counter
-            if self.getBalance() < 0.0:
-                # Process the transaction and update necessary variables
-                self._balance -= self.getOverdraft()
-                penaltyTransaction = Transaction("penalty", self.getOverdraft())
-                # add penalty to list of transactions
-                self._accountTransactions.append(penaltyTransaction)
-                self._overdrawnCount = self.getOverdrawnCount() + 1 
-                print("The account is overdrawn")
-            return True
-        # If the overdraw limit is exceeded or the withdraw is not possible return False
-        else:
-            print("Transaction denied")
-        return False
+            self._balance -= self.getOverdraft()
+            penaltyTransaction = Transaction("penalty", self.getOverdraft())
+            # add penalty to list of transactions
+            self._accountTransactions.append(penaltyTransaction)
+            self._overdrawnCount = self.getOverdrawnCount() + 1 
+            print("The account is overdrawn")
+        return True
 
     # Transfer an amount of money from one account to another
     #
@@ -125,14 +121,13 @@ class SavingsAccount(BankAccount):
     #  @return: True if the money was able to be transferred and False if not
     # Boden
     def transfer(self, amount, otherAccount):
-        if self.withdraw(amount):
-            otherAccount.deposit(amount)
-            transaction = Transaction("transfer", amount)
-            # add transfer to list of transactions
-            self._accountTransactions.append(transaction)
-            self._writeTransaction(transaction)
-            return True
-        return False
+        assert self.withdraw(amount)
+        otherAccount.deposit(amount)
+        transaction = Transaction("transfer", amount)
+        # add transfer to list of transactions
+        self._accountTransactions.append(transaction)
+        self._writeTransaction(transaction)
+        return True
 
     # Prints a String representation of all transactions for a Savings Account object      
     # Hunter 
