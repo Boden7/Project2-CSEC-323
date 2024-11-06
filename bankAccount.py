@@ -13,9 +13,6 @@ from abc import ABC, abstractmethod
 class BankAccount:
     # A private class variable that holds the number of the next account value
     _nextAccountVal = 1000
-
-    # A private class variable that holds the overdraft fee amounts for savings accounts
-    _overdraftFee = [20.00, 30.00, 50.00]
     
     # A private class variable that holds the interest rates in decimal form 
     _intRates = {'checking': 0.015, 'savings': 0.04}
