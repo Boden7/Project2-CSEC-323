@@ -141,13 +141,13 @@ class Client:
    #
    #  @return: The first name of the client (String)   
    def getFirstName(self):
-      return self._name.getFirst()
+      return self._name.getFirstName()
    
    # Accessor/getter method for the last name of the client
    #
    #  @return: The last name of the client (String)   
    def getLastName(self):
-      return self._name.getLast()
+      return self._name.getLastName()
    
    # Accessor/getter method for the street of the client
    #
@@ -175,11 +175,11 @@ class Client:
    
    # Mutator/setter method for the first name of the client  
    def setFirstName(self, firstIn):
-      self._name.setFirst(firstIn)
+      self._name.setFirstName(firstIn)
       
    # Mutator/setter method for the last name of the client  
    def setLastName(self, lastIn):
-      self._name.setLast(lastIn)
+      self._name.setLastName(lastIn)
    
    # Mutator/setter method for the street of the client  
    def setStreet(self, streetIn):
@@ -229,3 +229,4 @@ class Client:
       
       # Compare immutable variables
       return (self._clientNumber == other._clientNumber)
+   
