@@ -111,8 +111,8 @@ class Address:
     # Boden
     # @require every char in city is a letter, number, or space
     # @return The validity of the city name
-    def validCity(self, street: str):
-        for character in street:
+    def validCity(self, city: str):
+        for character in city:
             if character.isalpha() or character == " ":
                 pass
             else:
