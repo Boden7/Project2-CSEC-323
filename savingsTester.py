@@ -94,7 +94,7 @@ class TestSavingsAccount(unittest.TestCase):
         print("Testing interest calculation...")
         account.calcInterest()
         expected_balance = 100.0 * (1 + 0.04)  # 4% interest applied
-        self.assertAlmostEqual(self.account.getBalance(), expected_balance, places = 2)
+        self.assertAlmostEqual(account.getBalance(), expected_balance, places = 2)
     
     def test_transaction_listing(self):
         account = SavingsAccount()
@@ -103,7 +103,7 @@ class TestSavingsAccount(unittest.TestCase):
         print("Testing transaction listing...")
         account.deposit(50.0)
         account.withdraw(20.0)
-        transactions = self.account.printTransactionList()
+        transactions = account.printTransactionList()
         self.assertNotEqual(transactions, "There are no valid transactions to display.")
     
     def test_write_transaction(self):
