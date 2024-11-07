@@ -1,9 +1,9 @@
 """ 
-This module defines the SavingsAccount class.
+This module defines the CheckingAccount class.
 @author: Hunter Peacock, Boden Kahn, Brenden Shelton, and Anna Pitt
 @date: November 4, 2024
 
-A class to represent the data elements and methods required to implement a SavingsAccount
+A class to represent the data elements and methods required to implement a CheckingAccount
 This class is inherited from the BankAccount superclass
 """
 
@@ -13,41 +13,15 @@ from transaction import Transaction
 from AES_CBC import encrypt_AES_CBC, decrypt_AES_CBC
 
 # Hunter 
-class SavingsAccount(BankAccount):
-    
-    # A private class variable that holds the overdraft fee amounts for savings accounts
-    _overdraftFee = [20.00, 30.00, 50.00]
+class CheckingAccount(BankAccount):
 
-    # Constructs a SavingsAccount object.
+    # Constructs a CheckingAccount object.
     #
-    #  @param balanceIn: The starting balance of the Savings Account (Floating point)
+    #  @param balanceIn: The starting balance of the CHecking Account (Floating point)
     #
-    #  @ensure SavingsAccount object successfully created    
+    #  @ensure CheckingAccount object successfully created
     def __init__(self, balanceIn = 0.0):
-        super().__init__(balanceIn, account_type = 'savings')
-        self._overdrawnCount = 0  # Counter for overdrafts (savings only)
-
-    # An accessor/getter method for the overdraft fee
-    #
-    # @return: The overdraft fee (floating-point value)
-    # Anna
-    def getOverdraft(self):
-        return self._overdraftFee[self.getOverdrawnCount() - 1]
-
-    # An accessor/getter method for the number of times the account has been
-    # overdrawn
-    #
-    #   @return: The overdrawn counter associated with the Bank Account (integer)
-    # Anna
-    def getOverdrawnCount(self):
-        return self._overdrawnCount
-    
-    # An mutator/setter method for the number of times the account has been
-    # overdrawn
-    #
-    # Boden
-    def _setOverdrawnCount(self, overdrawnCount: int):
-        self._overdrawnCount = overdrawnCount
+        super().__init__(balanceIn, account_type = 'checking')
 
     # Deposits money into the account if the transaction is valid and records the transaction
     #
@@ -67,16 +41,9 @@ class SavingsAccount(BankAccount):
         self._accountTransactions.append(depositTransaction)
         self._writeTransaction(depositTransaction)
         self._balance += amount
-        if self.getBalance() >= 100.0 and self.getOverdrawnCount() > 0:
-            self._setOverdrawnCount (self._overdrawnCount - 1)
-        if self.getBalance() >= 10000.0:
-            # if the account balance exceeds 10000 reset overdrawn counter:
-            self._setOverdrawnCount(0)
         return True
 
     # Withdraws money from the account if the transaction is valid and records the transaction
-    # If the transaction is valid but the account will be overdrawn, applies an overdraft fee and 
-    # updates the counter for overdrawn
     #
     #  @param amount: the amount to be withdrawn
     #
@@ -85,26 +52,15 @@ class SavingsAccount(BankAccount):
     #  @return The success or failure of the withdrawal
     # Boden
     def withdraw(self, amount):
-        # Make sure the amount to withdrawal is not negative
         assert(isinstance(amount, float))
-        assert(amount >= 0)
-        # Ensure the balance is at least $250 more than the withdrawal amount
-        assert amount < self.getBalance() + 250.0 and self.getOverdrawnCount() < 3, "Transaction denied"
+        assert(amount > 0)
+        assert self._balance >= amount, "Withdrawal denied: insufficient funds."
         # Process the transaction and update necessary variables
         withdrawalTransaction = Transaction("withdrawal", amount)
         # add withdrawal to list of transactions
         self._accountTransactions.append(withdrawalTransaction)
+        self._writeTransaction(withdrawalTransaction)
         self._balance -= amount
-        # If the withdrawal would put the balance in the negative, add an
-        # overdraft fee and increment the overdrawn counter
-        if self.getBalance() < 0.0:
-            # Process the transaction and update necessary variables
-            self._setOverdrawnCount(self.getOverdrawnCount() + 1)
-            self._balance -= self.getOverdraft()
-            penaltyTransaction = Transaction("penalty", self.getOverdraft())
-            # add penalty to list of transactions
-            self._accountTransactions.append(penaltyTransaction)
-            print("The account is overdrawn")
         return True
 
     # Transfer an amount of money from one account to another
@@ -123,16 +79,16 @@ class SavingsAccount(BankAccount):
         self._writeTransaction(transaction)
         return True
 
-    # Calculates the interest payment for a savings account, adds a new interest transaction
+    # Calculates the interest payment for a checking account, adds a new interest transaction
     # to the account, and updates the account balance
     #
     #  @require balance > 0
     #
     #  @return if the interest was added or not    
-    # Hunter 
+    # Hunter
     def calcInterest(self):
-        assert(self.getBalance() > 0)
-        interest_amount = self.getBalance() * BankAccount._intRates['savings']
+        assert(self._balance > 0), "No interest can be added to an account with a negative balance."
+        interest_amount = self._balance * BankAccount._intRates['checking']
         transaction = Transaction("interest", interest_amount)
         # add interest to list of transactions
         self._accountTransactions.append(transaction)
@@ -140,18 +96,18 @@ class SavingsAccount(BankAccount):
         self.deposit(interest_amount)
         return True
     
-    # Prints a String representation of all transactions for a Savings Account object      
-    # Hunter 
+    # Prints a String representation of all transactions for a Checking Account object   
+    # Hunter
     def printTransactionList(self):
-        print("Savings Account Transactions:")
+        print("Checking Account Transactions:")
         print(super().printTransactionList())
 
-    # Method to write all transactions made on a savings account to the savings.txt
+    # Method to write all transactions made on a checking account to the checking.txt
     # file
     # Data is encrypted first
     #
     #  @param transaction: The transaction to be written to the file
-    # Hunter 
+    # Hunter, fixed by Boden
     def _writeTransaction(self, transaction: Transaction):
         # Set the Debug Flag
         DEBUG = False
@@ -165,7 +121,7 @@ class SavingsAccount(BankAccount):
             print("The length of the Initialization Vector is %d bytes" % len(iv))
 
         # Open the file to write the data
-        with open("savings.txt", "wb") as outfile:
+        with open("checking.txt", "wb") as outfile:
             # Convert transaction to string, then encrypt
             transaction_str = str(transaction)
             # Encrypt the transaction data
@@ -178,10 +134,11 @@ class SavingsAccount(BankAccount):
             outfile.write(b"\n")
 
         if DEBUG:
-            print("Transactions written to savings.txt.")
+            print("Transactions written to checking.txt.")
 
     # Method to read all transactions made on a checking account to the checking.txt
-    # file, data is decrypted first
+    # file
+    # Data is decrypted first
     # Hunter
     def _readTransactions(self):
         # Set the Debug Flag
@@ -190,7 +147,7 @@ class SavingsAccount(BankAccount):
         iv = b'MySuperSecretIV1'
 
         # Open the file to read the data
-        with open("savings.txt", "rb") as infile:
+        with open("checking.txt", "rb") as infile:
             length = infile.readline().rstrip().decode()
 
             while length != "":
@@ -204,10 +161,13 @@ class SavingsAccount(BankAccount):
                 infile.readline()  # Skip the newline
                 length = infile.readline().rstrip().decode()
 
-    # repr method to print the information of a clients checking account: 
+
+    # Returns a String representation of a Checking Account object
+    #
+    # @return: A String representation of the Checking Account object (String)    
     def __repr__(self):
-        return (f"Account Number: {super().getAccountNumber()}\n"
-                f"Balance: {self._balance:.2f}\n"
-                f"Account Type: '{super().getAccountType()}'\n"
-                f"Overdrawn Count: '{self.getOverdrawnCount()}'\n"
-                f"Transactions:\n{super().printTransactionList()}")
+        details = (f"Account Number: {super().getAccountNumber()}\n"
+                    f"Balance: {self._balance:.2f}\n"
+                    f"Account Type: '{super().getAccountType()}'\n"
+                    f"Transactions:\n{super().printTransactionList()}")
+        return (details)
