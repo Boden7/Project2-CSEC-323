@@ -9,7 +9,7 @@ Test each method with at least one unit test
 
 import unittest
 from unittest.mock import patch
-from Address import Address
+from address import Address
 
 class TestAddress(unittest.TestCase):
     # Tests not done in this tester that have been tested elsewhere:
