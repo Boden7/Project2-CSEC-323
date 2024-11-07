@@ -69,6 +69,13 @@ class BankAccount:
     def transfer(self, amount, otherAccount):
         pass
 
+    @abstractmethod
+    # Calculate the interest to add to an account based on the balance and account type
+    #
+    # Abstract method to be implemented in subclasses 
+    def calcInterest(self):
+        pass
+
     # Accessor/getter to retrieve the account type of an account
     #
     #  @return: The account type associated with the Bank Account (String)    
@@ -96,6 +103,13 @@ class BankAccount:
     # Hunter 
     def getNextAccountNumber(self):
         return BankAccount._nextAccountVal
+    
+    # An accessor/getter method for the interest rate
+    #
+    #  @return: The bank account's interest rate (float)
+    # Boden
+    def getInterestRate(self):
+        return BankAccount._intRates[self.getAccountType()]   
 
     # Returns a String representation of the transactions for a Bank Account object
     #
@@ -103,7 +117,8 @@ class BankAccount:
     # Anna
     def printTransactionList(self):
         # If the transaction list is empty
-        assert len(self._accountTransactions) != 0, "There are no valid transactions to display."
+        if(len(self._accountTransactions) == 0):
+            return("There are no valid transactions to display.")
       
         # If there is at least one transaction in the transaction list to display
         # Creates a String variable to hold the list of transactions
